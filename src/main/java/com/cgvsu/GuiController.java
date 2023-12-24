@@ -2,6 +2,8 @@ package com.cgvsu;
 
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
 import com.cgvsu.objreader.IncorrectFileException;
+import com.cgvsu.objwriter.ObjWriter;
+import com.cgvsu.objwriter.ObjWriterException;
 import com.cgvsu.render_engine.RenderEngine;
 import javafx.fxml.FXML;
 import javafx.animation.Animation;
@@ -83,7 +85,28 @@ public class GuiController {
             mesh = ObjReader.read(fileContent);
             // todo: обработка ошибок
         } catch (Exception exception) {
+            System.out.println("test reader");
+        }
+    }
 
+    @FXML
+    private void onSaveModelMenuItemClick() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
+        fileChooser.setTitle("Save Model");
+
+        File file = fileChooser.showSaveDialog((Stage) canvas.getScene().getWindow());
+        if (file == null) {
+            return;
+        }
+
+        String fileName = file.getAbsolutePath();
+
+        try {
+            ObjWriter.write(fileName, mesh);
+            // todo: обработка ошибок
+        } catch (ObjWriterException exception) {
+            System.out.println("test writer");
         }
     }
 

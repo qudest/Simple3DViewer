@@ -18,7 +18,7 @@ public class ObjWriter {
     private static final String OBJ_FACE_TOKEN = "f";
     public static void write(String fileName, Model model) {
         if (model == null || model.isEmpty()) {
-            throw new IllegalArgumentException("Invalid model for writing");
+            throw new ObjWriterException("Null model for writing");
         }
 
         File file = new File(fileName);
