@@ -209,7 +209,7 @@ class ObjWriterTest {
     @Test
     public void testWriteEmptyModel() {
         Model model = new Model();
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        Assertions.assertThrows(ObjWriterException.class, () -> {
             ObjWriter.write("testFile.obj", model);
         });
     }
