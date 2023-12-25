@@ -28,7 +28,7 @@ public class ObjWriter {
                 System.out.println("File created");
             }
         } catch (IOException e) {
-            throw new ObjWriterException("Error creating the file: " + fileName + " " + e.getMessage());
+            throw new ObjWriterException("Error creating the file: " + fileName + ". " + e.getMessage());
         }
 
         try (PrintWriter printWriter = new PrintWriter(file)) {
@@ -37,7 +37,7 @@ public class ObjWriter {
             writeNormals(printWriter, model.getNormals());
             writePolygons(printWriter, model.getPolygons());
         } catch (IOException e) {
-            throw new ObjWriterException("Error writing to file: " + fileName + " " + e.getMessage());
+            throw new ObjWriterException("Error writing to file: " + fileName + ". " + e.getMessage());
         }
     }
     protected static void writeVertices(PrintWriter pw, List<ThreeDimensionalVector> vertices) throws IOException {

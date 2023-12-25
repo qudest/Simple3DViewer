@@ -2,6 +2,7 @@ package com.cgvsu;
 
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
 import com.cgvsu.objreader.IncorrectFileException;
+import com.cgvsu.objreader.ObjReaderException;
 import com.cgvsu.objwriter.ObjWriter;
 import com.cgvsu.objwriter.ObjWriterException;
 import com.cgvsu.render_engine.RenderEngine;
@@ -11,13 +12,16 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.io.IOException;
 import java.io.File;
 
 import com.cgvsu.model.Model;
@@ -51,7 +55,7 @@ public class GuiController {
         timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
 
-        KeyFrame frame = new KeyFrame(Duration.millis(15), event -> {
+        KeyFrame frame = new KeyFrame(Duration.millis(30), event -> {
             double width = canvas.getWidth();
             double height = canvas.getHeight();
 
@@ -83,9 +87,9 @@ public class GuiController {
         try {
             String fileContent = Files.readString(fileName);
             mesh = ObjReader.read(fileContent);
-            // todo: обработка ошибок
-        } catch (Exception exception) {
-            System.out.println("test reader");
+        } catch (ObjReaderException | IOException | IncorrectFileException exception) {
+            //todo catch MalformedInputException
+            showErrorDialog(exception.getMessage());
         }
     }
 
@@ -104,10 +108,17 @@ public class GuiController {
 
         try {
             ObjWriter.write(fileName, mesh);
-            // todo: обработка ошибок
         } catch (ObjWriterException exception) {
-            System.out.println("test writer");
+            showErrorDialog(exception.getMessage());
         }
+    }
+
+    private void showErrorDialog(String e) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("An error has occurred!");
+        alert.setContentText(e);
+        alert.showAndWait();
     }
 
     @FXML
