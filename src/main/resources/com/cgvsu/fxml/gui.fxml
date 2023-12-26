@@ -53,5 +53,5 @@
         </Menu>
     </MenuBar>
 
-    <Canvas fx:id="canvas" height="870" width="1600" AnchorPane.topAnchor="30.0" />
+    <Canvas fx:id="canvas" height="720" width="1280" AnchorPane.topAnchor="30.0" />
 </AnchorPane>
