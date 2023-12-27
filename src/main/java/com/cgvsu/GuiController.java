@@ -51,7 +51,7 @@ public class GuiController {
     @FXML
     private Canvas canvas;
 
-    private Map<Model, Path> models = new HashMap<>(); // путь потом заменить на какой-нибудь id, (а путь хранить в модели???)
+    private Map<Model, Path> models = new HashMap<>(); // путь потом заменить на какой-нибудь id
     private Model selectedModel = null;
 
     private Camera camera = new Camera(
@@ -147,7 +147,7 @@ public class GuiController {
         try {
             String fileContent = Files.readString(fileName);
             selectedModel = ObjReader.read(fileContent);
-            models.put(selectedModel, fileName);
+            selectedModel.setPath(fileName);
         } catch (ObjReaderException | IOException | IncorrectFileException exception) {
             //todo: catch MalformedInputException
             showErrorDialog(exception.getMessage());
@@ -159,13 +159,11 @@ public class GuiController {
         //todo: При сохранении модели следует выбирать, учитывать
         // трансформации модели или нет. То есть нужна возможность сохранить как
         // исходную модель, так и модель после преобразований.
-        Path fileName = models.get(selectedModel);
+        String fileName = selectedModel.getPath().toString();
 
         try {
-            String fileContent = Files.readString(fileName);
-            selectedModel = ObjReader.read(fileContent);
-        } catch (ObjReaderException | IOException | IncorrectFileException exception) {
-            //todo: catch MalformedInputException
+            ObjWriter.write(fileName, selectedModel);
+        } catch (ObjWriterException exception) {
             showErrorDialog(exception.getMessage());
         }
     }

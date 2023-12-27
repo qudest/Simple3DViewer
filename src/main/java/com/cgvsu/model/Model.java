@@ -2,6 +2,7 @@ package com.cgvsu.model;
 import com.cgvsu.Math.Vectors.TwoDimensionalVector;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
 
+import java.nio.file.Path;
 import java.util.*;
 
 public class Model {
@@ -10,6 +11,15 @@ public class Model {
     private ArrayList<TwoDimensionalVector> textureVertices = new ArrayList<TwoDimensionalVector>();
     private ArrayList<ThreeDimensionalVector> normals = new ArrayList<ThreeDimensionalVector>();
     private ArrayList<Polygon> polygons = new ArrayList<Polygon>();
+    private Path path;
+
+    public Path getPath() {
+        return path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
+    }
 
     public Model(ArrayList<ThreeDimensionalVector> vertices, ArrayList<TwoDimensionalVector> textureVertices, ArrayList<ThreeDimensionalVector> normals, ArrayList<Polygon> polygons) {
         this.vertices = vertices;
