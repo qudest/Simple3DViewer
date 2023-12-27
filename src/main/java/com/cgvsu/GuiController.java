@@ -28,6 +28,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.cgvsu.model.Model;
 import com.cgvsu.objreader.ObjReader;
@@ -35,7 +37,7 @@ import com.cgvsu.render_engine.Camera;
 
 public class GuiController {
 
-    final private float TRANSLATION = 0.5F;
+    final private float TRANSLATION = 5F;
 
     @FXML
     private AnchorPane anchorPane;
@@ -49,7 +51,8 @@ public class GuiController {
     @FXML
     private Canvas canvas;
 
-    private Model mesh = null;
+    private Map<Model, Path> models = new HashMap<>(); // путь потом заменить на какой-нибудь id, (а путь хранить в модели???)
+    private Model selectedModel = null;
 
     private Camera camera = new Camera(
             new ThreeDimensionalVector(0, 0, 100),
@@ -73,8 +76,8 @@ public class GuiController {
             canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
             camera.setAspectRatio((float) (width / height));
 
-            if (mesh != null) {
-                RenderEngine.render(canvas.getGraphicsContext2D(), camera, mesh, (int) width, (int) height);
+            if (selectedModel != null) {
+                RenderEngine.render(canvas.getGraphicsContext2D(), camera, selectedModel, (int) width, (int) height);
             }
         });
 
@@ -88,7 +91,6 @@ public class GuiController {
         try {
             from = Integer.parseInt(verticesFrom.getText());
             count = Integer.parseInt(verticesCount.getText());
-            //todo: при вводе 01 крашится
         } catch (NullPointerException | IllegalArgumentException | IndexOutOfBoundsException exception) {
             showErrorDialog("Incorrect input: " + exception.getMessage());
             return;
@@ -99,7 +101,7 @@ public class GuiController {
             for (int i = from; i < len; i++) {
                 list.add(i);
             }
-            VerticesDeleter.removeVerticesFromModel(mesh, list);
+            selectedModel = VerticesDeleter.removeVerticesFromModel(selectedModel, list);
         } catch (IndexOutOfBoundsException | NullPointerException exception) {
             showErrorDialog(exception.getMessage());
         }
@@ -123,7 +125,7 @@ public class GuiController {
             for (int i = from; i < len; i++) {
                 list.add(i);
             }
-            PolygonsDeleter.deletePolygons(mesh, list, freeVert);
+            selectedModel = PolygonsDeleter.deletePolygons(selectedModel, list, freeVert);
         } catch (IndexOutOfBoundsException | NullPointerException exception) {
             showErrorDialog(exception.getMessage());
         }
@@ -144,15 +146,44 @@ public class GuiController {
 
         try {
             String fileContent = Files.readString(fileName);
-            mesh = ObjReader.read(fileContent);
+            selectedModel = ObjReader.read(fileContent);
+            models.put(selectedModel, fileName);
         } catch (ObjReaderException | IOException | IncorrectFileException exception) {
-            //todo catch MalformedInputException
+            //todo: catch MalformedInputException
             showErrorDialog(exception.getMessage());
         }
     }
 
     @FXML
     private void onSaveModelMenuItemClick() {
+        //todo: При сохранении модели следует выбирать, учитывать
+        // трансформации модели или нет. То есть нужна возможность сохранить как
+        // исходную модель, так и модель после преобразований.
+        Path fileName = models.get(selectedModel);
+
+        try {
+            String fileContent = Files.readString(fileName);
+            selectedModel = ObjReader.read(fileContent);
+        } catch (ObjReaderException | IOException | IncorrectFileException exception) {
+            //todo: catch MalformedInputException
+            showErrorDialog(exception.getMessage());
+        }
+    }
+
+    //todo: сцена, несколько моделей
+    //todo: окно для аффинных преобразований, масштабирование, вращение, перенос xyz
+    //todo: управление камерой, добавить кнопки
+    // Сейчас взаимодействие с камерой не очень удобное, используется только клавиатура. Но можно переделать его, добавив в систему
+    // мышь. За основу можете взять управление из компьютерной игры или приложения для работы с трехмерной графикой. Здесь хорошо бы продумать
+    // горячие клавиши и заодно упростить управление моделями. СТРЕЛОЧКИ СДЕЛАТЬ
+
+    //todo: оформление интерфейса
+    // светлая темная темка, цвета, анимации, alert закастомить
+
+    //todo: 3 пункт хз
+
+    @FXML
+    private void onSaveModelAsMenuItemClick() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
         fileChooser.setTitle("Save Model");
@@ -165,7 +196,7 @@ public class GuiController {
         String fileName = file.getAbsolutePath();
 
         try {
-            ObjWriter.write(fileName, mesh);
+            ObjWriter.write(fileName, selectedModel);
         } catch (ObjWriterException exception) {
             showErrorDialog(exception.getMessage());
         }

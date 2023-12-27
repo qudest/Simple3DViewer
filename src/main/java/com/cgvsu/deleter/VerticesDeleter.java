@@ -14,7 +14,7 @@ public class VerticesDeleter {
 	/**
 	 * Метод для удаления вершин из модели.
 	 */
-	public static void removeVerticesFromModel(Model model, List<Integer> vertexIndices) {
+	public static Model removeVerticesFromModel(Model model, List<Integer> vertexIndices) {
 		if (model == null || model.isEmpty()) {
 			throw new NullPointerException("Model is null");
 		}
@@ -30,6 +30,7 @@ public class VerticesDeleter {
 		// Смещение вершинных индексов внутри полигона
 		shiftIndicesInPolygons(model.getPolygons(), vertexIndices);
 
+		return model;
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class VerticesDeleter {
 			ArrayList<Integer> newVertexIndices = new ArrayList<>();
 			for (int polygonVertexIndex : polygon.getVertexIndices()) {
 				// Смещение в отрицательную сторону == число вершинных индексов на удаление, больше которых вершинный индекс полигона.
-				int offset = countLessThan(polygonVertexIndex + 1, sortedVertexIndicesToDelete);
+				int offset = countLessThan(polygonVertexIndex, sortedVertexIndicesToDelete);
 				// Добавляем вершину с отрицательным смещением
 				newVertexIndices.add(polygonVertexIndex - offset);
 			}

@@ -6,7 +6,7 @@ import com.cgvsu.model.Polygon;
 import java.util.*;
 
 public class PolygonsDeleter {
-    public static void deletePolygons(Model model, ArrayList<Integer> listNumbers, boolean deleteLonelyVertexes){
+    public static Model deletePolygons(Model model, ArrayList<Integer> listNumbers, boolean deleteLonelyVertexes){
         if (model == null || model.isEmpty()) {
             throw new NullPointerException("Model is null");
         }
@@ -24,6 +24,7 @@ public class PolygonsDeleter {
                 deleteAllLonelyNormals(model, currPolygon.getNormalIndices());
             }
         }
+        return model;
     }
     private static void deleteVertices(Model model, List<Integer> vertexIndices, int j){
         model.getVertices().remove(vertexIndices.get(j).intValue());//
