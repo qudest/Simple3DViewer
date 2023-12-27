@@ -3,6 +3,7 @@ package com.cgvsu.deleter;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
 import com.cgvsu.model.Model;
 import com.cgvsu.model.Polygon;
+import com.cgvsu.objwriter.ObjWriterException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,8 +13,11 @@ public class VerticesDeleter {
 
 	/**
 	 * Метод для удаления вершин из модели.
-	 * */
-	public static Model removeVerticesFromModel(Model model, List<Integer> vertexIndices) {
+	 */
+	public static void removeVerticesFromModel(Model model, List<Integer> vertexIndices) {
+		if (model == null || model.isEmpty()) {
+			throw new NullPointerException("Model is null");
+		}
 		// Список вершин на удаление отсортированный по возрастанию
 		List<Integer> vertexIndicesToDelete = new ArrayList<>(vertexIndices).stream().sorted(Comparator.reverseOrder()).toList();
 
@@ -26,7 +30,6 @@ public class VerticesDeleter {
 		// Смещение вершинных индексов внутри полигона
 		shiftIndicesInPolygons(model.getPolygons(), vertexIndices);
 
-		return model;
 	}
 
 	/**

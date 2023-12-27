@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
@@ -36,7 +37,10 @@ public class GuiController {
     final private float TRANSLATION = 0.5F;
 
     @FXML
-    AnchorPane anchorPane;
+    private AnchorPane anchorPane;
+
+    @FXML
+    private TextField polygonsFrom, polygonsCount, verticesFrom, verticesCount;
 
     @FXML
     private Canvas canvas;
@@ -76,11 +80,25 @@ public class GuiController {
 
     @FXML
     private void deleteVertices() {
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
-            list.add(i);
+        int from, count;
+        try {
+            from = Integer.parseInt(verticesFrom.getText());
+            count = Integer.parseInt(verticesCount.getText());
+            //todo: при вводе 01 крашится
+        } catch (NullPointerException | IllegalArgumentException | IndexOutOfBoundsException exception) {
+            showErrorDialog("Incorrect input: " + exception.getMessage());
+            return;
         }
-        VerticesDeleter.removeVerticesFromModel(mesh, list);
+        int len = from + count;
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            for (int i = from; i < len; i++) {
+                list.add(i);
+            }
+            VerticesDeleter.removeVerticesFromModel(mesh, list);
+        } catch (IndexOutOfBoundsException | NullPointerException exception) {
+            showErrorDialog(exception.getMessage());
+        }
     }
 
     @FXML

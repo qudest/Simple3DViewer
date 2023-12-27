@@ -7,6 +7,9 @@ import java.util.*;
 
 public class PolygonsDeleter {
     public static void deletePolygons(Model model, ArrayList<Integer> listNumbers, boolean deleteLonelyVertexes){
+        if (model == null || model.isEmpty()) {
+            throw new NullPointerException("Model is null");
+        }
         Comparator<Integer> comparator = Comparator.reverseOrder();
         //listNumbers.sort(comparator);
         List<Polygon> deletedPolygons= new ArrayList<>();
