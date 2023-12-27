@@ -1,6 +1,8 @@
 package com.cgvsu;
 
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
+import com.cgvsu.deleter.PolygonsDeleter;
+import com.cgvsu.deleter.VerticesDeleter;
 import com.cgvsu.objreader.IncorrectFileException;
 import com.cgvsu.objreader.ObjReaderException;
 import com.cgvsu.objwriter.ObjWriter;
@@ -23,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.File;
+import java.util.ArrayList;
 
 import com.cgvsu.model.Model;
 import com.cgvsu.objreader.ObjReader;
@@ -69,6 +72,24 @@ public class GuiController {
 
         timeline.getKeyFrames().add(frame);
         timeline.play();
+    }
+
+    @FXML
+    private void deleteVertices() {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            list.add(i);
+        }
+        VerticesDeleter.removeVerticesFromModel(mesh, list);
+    }
+
+    @FXML
+    private void deletePolygons() {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            list.add(i);
+        }
+        PolygonsDeleter.deletePolygons(mesh, list, true);
     }
 
     @FXML
