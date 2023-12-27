@@ -82,7 +82,7 @@
                <TextField fx:id="verticesCount" layoutX="71.0" layoutY="65.0" prefHeight="25.0" prefWidth="55.0" />
                <Text layoutX="26.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" />
                <Text layoutX="82.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Count" />
-               <CheckBox layoutX="133.0" layoutY="31.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="free vertices" />
+               <CheckBox fx:id="freeVertices" layoutX="133.0" layoutY="31.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="free vertices" />
             </children>
          </AnchorPane>
      </content>

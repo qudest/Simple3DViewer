@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -41,6 +42,9 @@ public class GuiController {
 
     @FXML
     private TextField polygonsFrom, polygonsCount, verticesFrom, verticesCount;
+
+    @FXML
+    private CheckBox freeVertices;
 
     @FXML
     private Canvas canvas;
@@ -103,11 +107,26 @@ public class GuiController {
 
     @FXML
     private void deletePolygons() {
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
-            list.add(i);
+        int from, count;
+        boolean freeVert;
+        try {
+            from = Integer.parseInt(polygonsFrom.getText());
+            count = Integer.parseInt(polygonsCount.getText());
+            freeVert = freeVertices.isSelected();
+        } catch (NullPointerException | IllegalArgumentException | IndexOutOfBoundsException exception) {
+            showErrorDialog("Incorrect input: " + exception.getMessage());
+            return;
         }
-        PolygonsDeleter.deletePolygons(mesh, list, true);
+        int len = from + count;
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            for (int i = from; i < len; i++) {
+                list.add(i);
+            }
+            PolygonsDeleter.deletePolygons(mesh, list, freeVert);
+        } catch (IndexOutOfBoundsException | NullPointerException exception) {
+            showErrorDialog(exception.getMessage());
+        }
     }
 
     @FXML
