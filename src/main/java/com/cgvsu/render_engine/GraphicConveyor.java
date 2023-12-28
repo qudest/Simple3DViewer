@@ -69,8 +69,7 @@ public class GraphicConveyor {
         final double y = (vertex.getA() * matrix.getMatrixInVectors()[0].getArrValues()[1]) + (vertex.getB() * matrix.getMatrixInVectors()[1].getArrValues()[1]) + (vertex.getC() * matrix.getMatrixInVectors()[2].getArrValues()[1]) + matrix.getMatrixInVectors()[3].getArrValues()[1];
         final double z = (vertex.getA() * matrix.getMatrixInVectors()[0].getArrValues()[2]) + (vertex.getB() * matrix.getMatrixInVectors()[1].getArrValues()[2]) + (vertex.getC() * matrix.getMatrixInVectors()[2].getArrValues()[2]) + matrix.getMatrixInVectors()[3].getArrValues()[2];
         final double w = (vertex.getA() * matrix.getMatrixInVectors()[0].getArrValues()[3]) + (vertex.getB() * matrix.getMatrixInVectors()[1].getArrValues()[3]) + (vertex.getC() * matrix.getMatrixInVectors()[2].getArrValues()[3]) + matrix.getMatrixInVectors()[3].getArrValues()[3];
-        Vector tmpVector = matrix.multiplyVector(new FourDimensionalVector(vertex.getA(), vertex.getB(), vertex.getC(), 1));
-        return new ThreeDimensionalVector(tmpVector.getArrValues()[0] / w, tmpVector.getArrValues()[1] / w, tmpVector.getArrValues()[2] / w);
+        return new ThreeDimensionalVector(x / w, y / w, z / w);
     }
 
     public static Point2f vertexToPoint(final ThreeDimensionalVector vertex, final int width, final int height) {

@@ -9,6 +9,8 @@ import com.cgvsu.objreader.ObjReaderException;
 import com.cgvsu.objwriter.ObjWriter;
 import com.cgvsu.objwriter.ObjWriterException;
 import com.cgvsu.render_engine.RenderEngine;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -18,6 +20,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -38,6 +41,8 @@ import com.cgvsu.render_engine.Camera;
 public class GuiController {
 
     final private float TRANSLATION = 5F;
+    @FXML
+    private ListView<String> viewModels = new ListView<>();
 
     @FXML
     private AnchorPane anchorPane;
@@ -55,6 +60,8 @@ public class GuiController {
 
     private Model selectedModel = null;
 
+    private ObservableList<String> items = FXCollections.observableArrayList();
+
     private Camera camera = new Camera(
             new ThreeDimensionalVector(0, 0, 100),
             new ThreeDimensionalVector(0, 0, 0),
@@ -66,6 +73,11 @@ public class GuiController {
     private void initialize() {
         anchorPane.prefWidthProperty().addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
         anchorPane.prefHeightProperty().addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
+
+        viewModels.setItems(items);
+        viewModels.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            handleModelSelection(newValue);
+        });
 
         timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -152,6 +164,7 @@ public class GuiController {
             selectedModel = ObjReader.read(fileContent);
             selectedModel.setPath(fileName);
             renderEngine.addModel(selectedModel);
+            items.add(fileName.toString());
         } catch (ObjReaderException | IOException | IncorrectFileException exception) {
             //todo: catch MalformedInputException СРОЧНО
             showErrorDialog(exception.getMessage());
@@ -169,7 +182,7 @@ public class GuiController {
         try {
             fileName = selectedModel.getPath().toString();
             //todo: catch NullModelException
-        } catch (NullModelException exception) {
+        } catch (NullPointerException exception) {
             showErrorDialog(exception.getMessage());
             return;
         }
@@ -181,7 +194,6 @@ public class GuiController {
         }
     }
 
-    //todo: сцена, несколько моделей СРОЧНО
     //todo: окно для аффинных преобразований, масштабирование, вращение, перенос xyz СРОЧНО
 
     //todo: управление камерой, добавить кнопки
@@ -193,6 +205,17 @@ public class GuiController {
     // светлая темная темка, цвета, анимации, alert закастомить
 
     //todo: 3 пункт хз
+
+    @FXML
+    private void onDeleteMenuItemClick() {
+        try {
+            renderEngine.getModels().remove(selectedModel);
+            items.remove(selectedModel.getPath().toString());
+            selectedModel = null;
+        } catch (NullPointerException exception) {
+            showErrorDialog(exception.getMessage());
+        }
+    }
 
     @FXML
     private void onSaveModelAsMenuItemClick() {
@@ -209,6 +232,7 @@ public class GuiController {
 
         try {
             ObjWriter.write(fileName, selectedModel);
+            //todo: catch NotSelectedModelException
         } catch (ObjWriterException exception) {
             showErrorDialog(exception.getMessage());
         }
@@ -220,6 +244,15 @@ public class GuiController {
         alert.setHeaderText("An error has occurred!");
         alert.setContentText(e);
         alert.showAndWait();
+    }
+
+    private void handleModelSelection(String modelName) {
+        for (Model model : renderEngine.getModels()) {
+            if (model.getPath().toString().equals(modelName)) {
+                selectedModel = model;
+                break;
+            }
+        }
     }
 
     @FXML

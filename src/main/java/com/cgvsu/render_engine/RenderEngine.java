@@ -1,17 +1,12 @@
 package com.cgvsu.render_engine;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
 import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Point.Point2f;
-import com.cgvsu.Math.Vectors.FourDimensionalVector;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
-import com.cgvsu.Math.Vectors.Vector;
 import javafx.scene.canvas.GraphicsContext;
 import com.cgvsu.model.Model;
 import static com.cgvsu.render_engine.GraphicConveyor.*;
