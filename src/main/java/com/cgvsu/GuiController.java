@@ -29,8 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 import com.cgvsu.model.Model;
 import com.cgvsu.objreader.ObjReader;
@@ -52,7 +51,8 @@ public class GuiController {
     @FXML
     private Canvas canvas;
 
-    private Map<Model, Path> models = new HashMap<>(); // путь потом заменить на какой-нибудь id
+    private RenderEngine renderEngine;
+
     private Model selectedModel = null;
 
     private Camera camera = new Camera(
@@ -70,16 +70,16 @@ public class GuiController {
         timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
 
+        renderEngine = new RenderEngine(canvas.getGraphicsContext2D(), camera, (int) canvas.getWidth(), (int) canvas.getHeight());
+
         KeyFrame frame = new KeyFrame(Duration.millis(30), event -> {
-            double width = canvas.getWidth();
-            double height = canvas.getHeight();
+            renderEngine.setWidth((int) canvas.getWidth());
+            renderEngine.setHeight((int) canvas.getHeight());
 
-            canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
-            camera.setAspectRatio((float) (width / height));
+            canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            camera.setAspectRatio((float) (canvas.getWidth() / canvas.getHeight()));
 
-            if (selectedModel != null) {
-                RenderEngine.render(canvas.getGraphicsContext2D(), camera, selectedModel, (int) width, (int) height);
-            }
+            renderEngine.render();
         });
 
         timeline.getKeyFrames().add(frame);
@@ -151,6 +151,7 @@ public class GuiController {
             String fileContent = Files.readString(fileName);
             selectedModel = ObjReader.read(fileContent);
             selectedModel.setPath(fileName);
+            renderEngine.addModel(selectedModel);
         } catch (ObjReaderException | IOException | IncorrectFileException exception) {
             //todo: catch MalformedInputException СРОЧНО
             showErrorDialog(exception.getMessage());

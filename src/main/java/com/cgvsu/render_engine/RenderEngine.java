@@ -1,7 +1,10 @@
 package com.cgvsu.render_engine;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
 import com.cgvsu.Math.Matrix.NDimensionalMatrix;
@@ -14,14 +17,44 @@ import com.cgvsu.model.Model;
 import static com.cgvsu.render_engine.GraphicConveyor.*;
 
 public class RenderEngine {
+    private final GraphicsContext graphicsContext;
+    private final Camera camera;
+    private final List<Model> models = new ArrayList<>();
+    private int width;
+    private int height;
 
-    public static void render(
-            final GraphicsContext graphicsContext,
-            final Camera camera,
-            final Model mesh,
-            final int width,
-            final int height)
-    {
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void addModel(Model model) {
+        models.add(model);
+    }
+
+    public List<Model> getModels() {
+        return models;
+    }
+
+    public RenderEngine(GraphicsContext graphicsContext, Camera camera, int width, int height) {
+        this.graphicsContext = graphicsContext;
+        this.camera = camera;
+        this.width = width;
+        this.height = height;
+    }
+
+    public void render() {
         FourDimensionalMatrix modelMatrix = rotateScaleTranslate();
         FourDimensionalMatrix viewMatrix =  camera.getViewMatrix();
         FourDimensionalMatrix projectionMatrix = camera.getProjectionMatrix();
@@ -30,6 +63,12 @@ public class RenderEngine {
         modelViewProjectionMatrix = (NDimensionalMatrix)  modelViewProjectionMatrix.multiplyMatrix(viewMatrix);
         modelViewProjectionMatrix = (NDimensionalMatrix)  modelViewProjectionMatrix.multiplyMatrix(projectionMatrix);
 
+        for (Model mesh: models) {
+            drawPolygons(mesh, modelViewProjectionMatrix);
+        }
+    }
+
+    private void drawPolygons(Model mesh, NDimensionalMatrix modelViewProjectionMatrix) {
         final int nPolygons = mesh.getPolygons().size();
         for (int polygonInd = 0; polygonInd < nPolygons; ++polygonInd) {
             final int nVerticesInPolygon = mesh.getPolygons().get(polygonInd).getVertexIndices().size();
@@ -39,8 +78,6 @@ public class RenderEngine {
 
 
                 ThreeDimensionalVector vertex = mesh.getVertices().get(mesh.getPolygons().get(polygonInd).getVertexIndices().get(vertexInPolygonInd));
-
-                ThreeDimensionalVector vertexVecmath = new ThreeDimensionalVector(vertex.getA(), vertex.getB(), vertex.getC());
                 Point2f resultPoint = vertexToPoint(multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertex), width, height);
 
                 resultPoints.add(resultPoint);
