@@ -6,9 +6,9 @@ import java.util.List;
 /** @author <a href="https://github.com/valyalshikovd/LinearAlgebra">Валяльщиков Дмитрий Алексеевич</a> */
 public class ThreeDimensionalVector extends NDimensionalVector{
 
-    final private double a;
-    final private double b;
-    final private double c;
+    private double a;
+    private double b;
+    private double c;
 
 
     public ThreeDimensionalVector(double a, double b, double c) {
@@ -28,6 +28,18 @@ public class ThreeDimensionalVector extends NDimensionalVector{
 
     public double getC() {
         return c;
+    }
+
+    public void setA(double a) {
+        this.a = a;
+    }
+
+    public void setB(double b) {
+        this.b = b;
+    }
+
+    public void setC(double c) {
+        this.c = c;
     }
 
     public static ThreeDimensionalVector addition(ThreeDimensionalVector vector1, ThreeDimensionalVector vector2) {
