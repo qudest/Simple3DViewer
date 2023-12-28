@@ -79,9 +79,7 @@ public class ThreeDimensionalVector extends NDimensionalVector{
 
     public static ThreeDimensionalVector sum(List<ThreeDimensionalVector> vectors) {
         final var result = new ThreeDimensionalVector(1,1,1);
-
         vectors.forEach(result::addition);
-
         return result;
     }
 
