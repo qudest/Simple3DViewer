@@ -62,17 +62,4 @@ public class RenderEngine {
                         resultPoints.get(0).getY());
         }
     }
-
-    public static ThreeDimensionalVector multiplyMatrix4ByVector3(final NDimensionalMatrix matrix, final ThreeDimensionalVector vertex) {
-        final double x = (vertex.getA() * matrix.getMatrixInVectors()[0].getArrValues()[0]) + (vertex.getB() * matrix.getMatrixInVectors()[1].getArrValues()[0]) + (vertex.getC() * matrix.getMatrixInVectors()[2].getArrValues()[0]) + matrix.getMatrixInVectors()[3].getArrValues()[0];
-        final double y = (vertex.getA() * matrix.getMatrixInVectors()[0].getArrValues()[1]) + (vertex.getB() * matrix.getMatrixInVectors()[1].getArrValues()[1]) + (vertex.getC() * matrix.getMatrixInVectors()[2].getArrValues()[1]) + matrix.getMatrixInVectors()[3].getArrValues()[1];
-        final double z = (vertex.getA() * matrix.getMatrixInVectors()[0].getArrValues()[2]) + (vertex.getB() * matrix.getMatrixInVectors()[1].getArrValues()[2]) + (vertex.getC() * matrix.getMatrixInVectors()[2].getArrValues()[2]) + matrix.getMatrixInVectors()[3].getArrValues()[2];
-        final double w = (vertex.getA() * matrix.getMatrixInVectors()[0].getArrValues()[3]) + (vertex.getB() * matrix.getMatrixInVectors()[1].getArrValues()[3]) + (vertex.getC() * matrix.getMatrixInVectors()[2].getArrValues()[3]) + matrix.getMatrixInVectors()[3].getArrValues()[3];
-        Vector tmpVector = matrix.multiplyVector(new FourDimensionalVector(vertex.getA(), vertex.getB(), vertex.getC(), 1));
-        //      System.out.println(Arrays.toString(tmpVector.getArrValues()));
-        //      System.out.println(x + " " +  y + " " +  z + " " + w);
-        //      System.out.println(x / w + " " +  y / w + " " +  z / w);
-        //      System.out.println(Arrays.toString(new ThreeDimensionalVector(tmpVector.getArrValues()[0] / tmpVector.getArrValues()[3], tmpVector.getArrValues()[1] / tmpVector.getArrValues()[3], tmpVector.getArrValues()[2] / tmpVector.getArrValues()[3]).getArrValues()));
-        return new ThreeDimensionalVector(tmpVector.getArrValues()[0] / w, tmpVector.getArrValues()[1] / w, tmpVector.getArrValues()[2] / w);
-    }
 }
