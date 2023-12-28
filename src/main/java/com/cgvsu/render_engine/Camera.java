@@ -1,5 +1,6 @@
 package com.cgvsu.render_engine;
 import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
+import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Vectors.*;
 
 
@@ -58,17 +59,17 @@ public class Camera {
         movePosition(translation);
         moveTarget(translation);
     }
-    public void rotateCamera(final FourDimensionalMatrix mR) throws Exception {
+    public void rotateCamera(final NDimensionalMatrix mR) throws Exception {
         ThreeDimensionalVector vZ = ThreeDimensionalVector.subtraction((ThreeDimensionalVector) target, (ThreeDimensionalVector) position);
         vZ = GraphicConveyor.multiplyMatrix4ByVector3(mR, vZ);
         target = ThreeDimensionalVector.addition((ThreeDimensionalVector) position, vZ);
 
     }
-    FourDimensionalMatrix getViewMatrix() {
+    NDimensionalMatrix getViewMatrix() {
         return GraphicConveyor.lookAt(position,target);
     }
 
-    FourDimensionalMatrix getProjectionMatrix() {
+    NDimensionalMatrix getProjectionMatrix() {
         return GraphicConveyor.perspective(fov, aspectRatio, nearPlane, farPlane);
     }
 }

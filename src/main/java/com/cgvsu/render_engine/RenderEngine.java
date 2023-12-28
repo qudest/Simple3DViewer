@@ -50,9 +50,9 @@ public class RenderEngine {
     }
 
     public void render() {
-        FourDimensionalMatrix modelMatrix = getModelMatrix(new ThreeDimensionalVector(0,0,0), new ThreeDimensionalVector(0,0,0), new ThreeDimensionalVector(1,1,1));
-        FourDimensionalMatrix viewMatrix =  camera.getViewMatrix();
-        FourDimensionalMatrix projectionMatrix = camera.getProjectionMatrix();
+        NDimensionalMatrix modelMatrix = getModelMatrix(new ThreeDimensionalVector(0,0,0), new ThreeDimensionalVector(0,0,0), new ThreeDimensionalVector(1,1,1));
+        NDimensionalMatrix viewMatrix =  camera.getViewMatrix();
+        NDimensionalMatrix projectionMatrix = camera.getProjectionMatrix();
 
         NDimensionalMatrix modelViewProjectionMatrix = modelMatrix;
         modelViewProjectionMatrix = (NDimensionalMatrix)  modelViewProjectionMatrix.multiplyMatrix(viewMatrix);

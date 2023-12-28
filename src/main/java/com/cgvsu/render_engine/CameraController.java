@@ -1,6 +1,7 @@
 package com.cgvsu.render_engine;
 
 import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
+import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
 
 public class CameraController {
@@ -59,7 +60,7 @@ public class CameraController {
             angleOfRotate.setA(-89.9F);
         }
 
-        FourDimensionalMatrix mR = GraphicConveyor.getRotationMatrix(new ThreeDimensionalVector(angleOfRotate.getB(), 0,0));
+        NDimensionalMatrix mR = GraphicConveyor.getRotationMatrix(new ThreeDimensionalVector(angleOfRotate.getB(), 0,0));
 
         forwardV = GraphicConveyor.multiplyMatrix4ByVector3(mR, forwardV);
         backwardV = GraphicConveyor.multiplyMatrix4ByVector3(mR, backwardV);

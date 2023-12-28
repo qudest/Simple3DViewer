@@ -20,77 +20,77 @@ public class GraphicConveyor {
 //                new FourDimensionalVector(0,0,0,1)
 //        );
 //    }
-    private static FourDimensionalMatrix getScaleMatrix(ThreeDimensionalVector scale) {
-        NDimensionalVector  v1 = new FourDimensionalVector(1, 0, 0, 0);
-        NDimensionalVector  v2 = new FourDimensionalVector(0, 1, 0, 0);
-        NDimensionalVector  v3 = new FourDimensionalVector(0, 0, 1, 0);
-        NDimensionalVector  v4 = new FourDimensionalVector(0, 0, 0, 1);
+    private static NDimensionalMatrix getScaleMatrix(ThreeDimensionalVector scale) {
+        NDimensionalVector v1 = new NDimensionalVector(1, 0, 0, 0);
+        NDimensionalVector v2 = new NDimensionalVector(0, 1, 0, 0);
+        NDimensionalVector v3 = new NDimensionalVector(0, 0, 1, 0);
+        NDimensionalVector v4 = new NDimensionalVector(0, 0, 0, 1);
 
-        return new FourDimensionalMatrix(v1, v2, v3, v4);
+        return new NDimensionalMatrix(v1, v2, v3, v4);
     }
-    public static FourDimensionalMatrix getRotationMatrix(ThreeDimensionalVector angle) {
-        FourDimensionalMatrix matrixRotationX = getRotationMatrixX(angle.getA());
-        FourDimensionalMatrix matrixRotationY = getRotationMatrixY(angle.getB());
-        FourDimensionalMatrix matrixRotationZ = getRotationMatrixZ(angle.getC());
+    public static NDimensionalMatrix getRotationMatrix(ThreeDimensionalVector angle) {
+        NDimensionalMatrix matrixRotationX = getRotationMatrixX(angle.getA());
+        NDimensionalMatrix matrixRotationY = getRotationMatrixY(angle.getB());
+        NDimensionalMatrix matrixRotationZ = getRotationMatrixZ(angle.getC());
 
-        return (FourDimensionalMatrix) matrixRotationX.multiplyMatrix(matrixRotationY).multiplyMatrix(matrixRotationZ);
+        return (NDimensionalMatrix) matrixRotationX.multiplyMatrix(matrixRotationY).multiplyMatrix(matrixRotationZ);
     }
-    private static FourDimensionalMatrix getRotationMatrixX(double xAngle) {
+    private static NDimensionalMatrix getRotationMatrixX(double xAngle) {
         xAngle = Math.toRadians(xAngle);
         double cosX = Math.cos(xAngle);
         double sinX = Math.sin(xAngle);
 
-        FourDimensionalVector v1 = new FourDimensionalVector(1, 0, 0, 0);
-        FourDimensionalVector v2 = new FourDimensionalVector(0, cosX, -sinX, 0);
-        FourDimensionalVector v3 = new FourDimensionalVector(0, sinX, cosX, 0);
-        FourDimensionalVector v4 = new FourDimensionalVector(0, 0, 0, 1);
+        NDimensionalVector v1 = new NDimensionalVector(1, 0, 0, 0);
+        NDimensionalVector v2 = new NDimensionalVector(0, cosX, -sinX, 0);
+        NDimensionalVector v3 = new NDimensionalVector(0, sinX, cosX, 0);
+        NDimensionalVector v4 = new NDimensionalVector(0, 0, 0, 1);
 
-        return new FourDimensionalMatrix(v1, v2, v3, v4);
+        return new NDimensionalMatrix(v1, v2, v3, v4);
     }
-    private static FourDimensionalMatrix getRotationMatrixY(double yAngle) {
+    private static NDimensionalMatrix getRotationMatrixY(double yAngle) {
         yAngle = Math.toRadians(yAngle);
         double cosY = Math.cos(yAngle);
         double sinY = Math.sin(yAngle);
 
-        FourDimensionalVector v1 = new FourDimensionalVector(cosY, 0, sinY, 0);
-        FourDimensionalVector v2 = new FourDimensionalVector(0, 1, 0, 0);
-        FourDimensionalVector v3 = new FourDimensionalVector(-sinY, 0, cosY, 0);
-        FourDimensionalVector v4 = new FourDimensionalVector(0, 0, 0, 1);
+        NDimensionalVector v1 = new NDimensionalVector(cosY, 0, sinY, 0);
+        NDimensionalVector v2 = new NDimensionalVector(0, 1, 0, 0);
+        NDimensionalVector v3 = new NDimensionalVector(-sinY, 0, cosY, 0);
+        NDimensionalVector v4 = new NDimensionalVector(0, 0, 0, 1);
 
-        return new FourDimensionalMatrix(v1, v2, v3, v4);
+        return new NDimensionalMatrix(v1, v2, v3, v4);
     }
-    private static FourDimensionalMatrix getRotationMatrixZ(double zAngle) {
+    private static NDimensionalMatrix getRotationMatrixZ(double zAngle) {
         zAngle = Math.toRadians(zAngle);
         double cosZ = Math.cos(zAngle);
         double sinZ = Math.sin(zAngle);
 
-        FourDimensionalVector v1 = new FourDimensionalVector(cosZ, -sinZ, 0, 0);
-        FourDimensionalVector v2 = new FourDimensionalVector(sinZ, cosZ, 0, 0);
-        FourDimensionalVector v3 = new FourDimensionalVector(0, 0, 1, 0);
-        FourDimensionalVector v4 = new FourDimensionalVector(0, 0, 0, 1);
+        NDimensionalVector v1 = new NDimensionalVector(cosZ, -sinZ, 0, 0);
+        NDimensionalVector v2 = new NDimensionalVector(sinZ, cosZ, 0, 0);
+        NDimensionalVector v3 = new NDimensionalVector(0, 0, 1, 0);
+        NDimensionalVector v4 = new NDimensionalVector(0, 0, 0, 1);
 
-        return new FourDimensionalMatrix(v1, v2, v3, v4);
+        return new NDimensionalMatrix(v1, v2, v3, v4);
     }
-    private static FourDimensionalMatrix getTranslationMatrix(ThreeDimensionalVector translate) {
-        NDimensionalVector  v1 = new FourDimensionalVector(1, 0, 0, translate.getA());
-        NDimensionalVector  v2 = new FourDimensionalVector(0, 1, 0, translate.getB());
-        NDimensionalVector  v3 = new FourDimensionalVector(0, 0, 1, translate.getC());
-        NDimensionalVector  v4 = new FourDimensionalVector(0, 0, 0, 1);
+    private static NDimensionalMatrix getTranslationMatrix(ThreeDimensionalVector translate) {
+        NDimensionalVector  v1 = new NDimensionalVector(1, 0, 0, translate.getA());
+        NDimensionalVector  v2 = new NDimensionalVector(0, 1, 0, translate.getB());
+        NDimensionalVector  v3 = new NDimensionalVector(0, 0, 1, translate.getC());
+        NDimensionalVector  v4 = new NDimensionalVector(0, 0, 0, 1);
 
-        return new FourDimensionalMatrix(v1, v2, v3, v4);
+        return new NDimensionalMatrix(v1, v2, v3, v4);
     }
-    public static FourDimensionalMatrix getModelMatrix(ThreeDimensionalVector translate, ThreeDimensionalVector anglesOfRotate, ThreeDimensionalVector scale) {
-        FourDimensionalMatrix translationMatrix = getTranslationMatrix(translate);
-        FourDimensionalMatrix rotationMatrix = getRotationMatrix(anglesOfRotate);
-        FourDimensionalMatrix scaleMatrix = getScaleMatrix(scale);
+    public static NDimensionalMatrix getModelMatrix(ThreeDimensionalVector translate, ThreeDimensionalVector anglesOfRotate, ThreeDimensionalVector scale) {
+        NDimensionalMatrix translationMatrix = getTranslationMatrix(translate);
+        NDimensionalMatrix rotationMatrix = getRotationMatrix(anglesOfRotate);
+        NDimensionalMatrix scaleMatrix = getScaleMatrix(scale);
 
-        return (FourDimensionalMatrix) translationMatrix.multiplyMatrix(rotationMatrix).multiplyMatrix(scaleMatrix);
+        return (NDimensionalMatrix) translationMatrix.multiplyMatrix(rotationMatrix).multiplyMatrix(scaleMatrix);
     }
-    public static FourDimensionalMatrix lookAt(Vector eye, Vector target) {
+    public static NDimensionalMatrix lookAt(Vector eye, Vector target) {
         return lookAt(new ThreeDimensionalVector(eye.getArrValues()[0], eye.getArrValues()[1], eye.getArrValues()[2]), new ThreeDimensionalVector(target.getArrValues()[0], target.getArrValues()[1], target.getArrValues()[2]), new ThreeDimensionalVector(0F, 1.0F, 0F));
     }
 
-    public static FourDimensionalMatrix lookAt(ThreeDimensionalVector eye, ThreeDimensionalVector target, ThreeDimensionalVector up) {
+    public static NDimensionalMatrix lookAt(ThreeDimensionalVector eye, ThreeDimensionalVector target, ThreeDimensionalVector up) {
         Vector tempNd = target.subtraction(eye);
         ThreeDimensionalVector resultZ = new ThreeDimensionalVector(tempNd.getArrValues()[0], tempNd.getArrValues()[1], tempNd.getArrValues()[2]);
         ThreeDimensionalVector resultX = up.vectorProduct(resultZ);
@@ -100,7 +100,7 @@ public class GraphicConveyor {
         resultY = resultY.normalization();
         resultZ = resultZ.normalization();
 
-        return new FourDimensionalMatrix(
+        return new NDimensionalMatrix(
                 new NDimensionalVector(resultX.getA(), resultY.getA(), resultZ.getA(), 0),
                 new NDimensionalVector(resultX.getB(), resultY.getB(), resultZ.getB(), 0),
                 new NDimensionalVector(resultX.getC(), resultY.getC(), resultZ.getC(), 0),
@@ -108,14 +108,14 @@ public class GraphicConveyor {
         );
     }
 
-    public static FourDimensionalMatrix perspective(
+    public static NDimensionalMatrix perspective(
             final float fov,
             final float aspectRatio,
             final float nearPlane,
             final float farPlane) {
         float tangentMinusOnDegree = (float) (1.0F / (Math.tan(fov * 0.5F)));
 
-        return new FourDimensionalMatrix(
+        return new NDimensionalMatrix(
                 new NDimensionalVector(tangentMinusOnDegree / aspectRatio, 0, 0, 0),
                 new NDimensionalVector(0, tangentMinusOnDegree, 0, 0),
                 new NDimensionalVector(0, 0, (farPlane + nearPlane) / (farPlane - nearPlane), 1),
