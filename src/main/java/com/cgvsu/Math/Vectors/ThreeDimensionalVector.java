@@ -1,6 +1,8 @@
 package com.cgvsu.Math.Vectors;
 
 
+import java.util.List;
+
 /** @author <a href="https://github.com/valyalshikovd/LinearAlgebra">Валяльщиков Дмитрий Алексеевич</a> */
 public class ThreeDimensionalVector extends NDimensionalVector{
 
@@ -61,6 +63,14 @@ public class ThreeDimensionalVector extends NDimensionalVector{
         double j = a * vector.getC() - c * vector.getA();
         double k = a * vector.getB() - b * vector.getA();
         return new ThreeDimensionalVector(i, -j, k);
+    }
+
+    public static ThreeDimensionalVector sum(List<ThreeDimensionalVector> vectors) {
+        final var result = new ThreeDimensionalVector(1,1,1);
+
+        vectors.forEach(result::addition);
+
+        return result;
     }
 
 }
