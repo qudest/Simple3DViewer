@@ -11,13 +11,22 @@ public class Model {
     private List<TwoDimensionalVector> textureVertices;
     private List<ThreeDimensionalVector> normals;
     private List<Polygon> polygons;
-    private Path path;
+    public double scaleX = 1;
+    public double scaleY = 1;
+    public double scaleZ = 1;
+    public double translateX = 1;
+    public double translateY = 1;
+    public double translateZ = 1;
+    public double rotateX = 0;
+    public double rotateY = 0;
+    public double rotateZ = 0;
+    private String path;
 
-    public Path getPath() {
+    public String getPath() {
         return path;
     }
 
-    public void setPath(Path path) {
+    public void setPath(String path) {
         this.path = path;
     }
 

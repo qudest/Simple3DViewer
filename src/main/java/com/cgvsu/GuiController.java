@@ -48,7 +48,7 @@ public class GuiController {
     private AnchorPane anchorPane;
 
     @FXML
-    private TextField polygonsFrom, polygonsCount, verticesFrom, verticesCount;
+    private TextField polygonsFrom, polygonsCount, verticesFrom, verticesCount, scaleX, scaleY, scaleZ, rotateX, rotateY, rotateZ, translateX, translateY, translateZ;
 
     @FXML
     private CheckBox freeVertices;
@@ -57,6 +57,7 @@ public class GuiController {
     private Canvas canvas;
 
     private RenderEngine renderEngine;
+    private int countId = 1;
 
     private Model selectedModel = null;
 
@@ -96,6 +97,42 @@ public class GuiController {
 
         timeline.getKeyFrames().add(frame);
         timeline.play();
+    }
+
+    @FXML
+    private void handleScale() {
+        try {
+            selectedModel.scaleX = Double.parseDouble(scaleX.getText());
+            selectedModel.scaleY = Double.parseDouble(scaleY.getText());
+            selectedModel.scaleZ = Double.parseDouble(scaleZ.getText());
+            //todo: catch IncorrectInputException
+        } catch (NullPointerException | IllegalArgumentException | IndexOutOfBoundsException exception) {
+            showErrorDialog("Incorrect input: " + exception.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleRotate() {
+        try {
+            selectedModel.rotateX = Double.parseDouble(rotateX.getText());
+            selectedModel.rotateY = Double.parseDouble(rotateY.getText());
+            selectedModel.rotateZ = Double.parseDouble(rotateZ.getText());
+            //todo: catch IncorrectInputException
+        } catch (NullPointerException | IllegalArgumentException | IndexOutOfBoundsException exception) {
+            showErrorDialog("Incorrect input: " + exception.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleTranslate() {
+        try {
+            selectedModel.translateX = Double.parseDouble(translateX.getText());
+            selectedModel.translateY = Double.parseDouble(translateY.getText());
+            selectedModel.translateZ = Double.parseDouble(translateZ.getText());
+            //todo: catch IncorrectInputException
+        } catch (NullPointerException | IllegalArgumentException | IndexOutOfBoundsException exception) {
+            showErrorDialog("Incorrect input: " + exception.getMessage());
+        }
     }
 
     @FXML
@@ -157,14 +194,22 @@ public class GuiController {
             return;
         }
 
-        Path fileName = Path.of(file.getAbsolutePath());
+        Path filePath = Path.of(file.getAbsolutePath());
+        String fileName = filePath.toString();
 
         try {
-            String fileContent = Files.readString(fileName);
+            String fileContent = Files.readString(filePath);
             selectedModel = ObjReader.read(fileContent);
+            if (renderEngine.getModels().containsKey(fileName)) {
+                int extensionIndex = fileName.lastIndexOf(".");
+                String baseName = fileName.substring(0, extensionIndex);
+                String extension = fileName.substring(extensionIndex);
+                fileName = baseName + countId + extension;
+                countId++;
+            }
             selectedModel.setPath(fileName);
             renderEngine.addModel(selectedModel);
-            items.add(fileName.toString());
+            items.add(fileName);
         } catch (ObjReaderException | IOException | IncorrectFileException exception) {
             //todo: catch MalformedInputException СРОЧНО
             showErrorDialog(exception.getMessage());
@@ -194,8 +239,6 @@ public class GuiController {
         }
     }
 
-    //todo: окно для аффинных преобразований, масштабирование, вращение, перенос xyz СРОЧНО
-
     //todo: управление камерой, добавить кнопки
     // Сейчас взаимодействие с камерой не очень удобное, используется только клавиатура. Но можно переделать его, добавив в систему
     // мышь. За основу можете взять управление из компьютерной игры или приложения для работы с трехмерной графикой. Здесь хорошо бы продумать
@@ -209,9 +252,9 @@ public class GuiController {
     @FXML
     private void onDeleteMenuItemClick() {
         try {
-            renderEngine.getModels().remove(selectedModel);
-            items.remove(selectedModel.getPath().toString());
-            selectedModel = null;
+            renderEngine.getModels().remove(selectedModel.getPath());
+            items.remove(selectedModel.getPath());
+            selectedModel = renderEngine.getModels().values().stream().reduce((first, second) -> second).orElse(null);
         } catch (NullPointerException exception) {
             showErrorDialog(exception.getMessage());
         }
@@ -247,8 +290,8 @@ public class GuiController {
     }
 
     private void handleModelSelection(String modelName) {
-        for (Model model : renderEngine.getModels()) {
-            if (model.getPath().toString().equals(modelName)) {
+        for (Model model: renderEngine.getModels().values()) {
+            if (model.getPath().equals(modelName)) {
                 selectedModel = model;
                 break;
             }
