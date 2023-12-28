@@ -1,14 +1,15 @@
 package com.cgvsu.deleter;
 
+import com.cgvsu.exceptions.NullModelException;
 import com.cgvsu.model.Model;
 import com.cgvsu.model.Polygon;
 
 import java.util.*;
 
 public class PolygonsDeleter {
-    public static Model deletePolygons(Model model, ArrayList<Integer> listNumbers, boolean deleteLonelyVertexes){
+    public static Model deletePolygons(Model model, ArrayList<Integer> listNumbers, boolean deleteLonelyVertexes) throws NullModelException {
         if (model == null || model.isEmpty()) {
-            throw new NullPointerException("Model is null");
+            throw new NullModelException();
         }
         Comparator<Integer> comparator = Comparator.reverseOrder();
         //listNumbers.sort(comparator);

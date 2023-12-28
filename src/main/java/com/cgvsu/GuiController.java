@@ -3,6 +3,7 @@ package com.cgvsu;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
 import com.cgvsu.deleter.PolygonsDeleter;
 import com.cgvsu.deleter.VerticesDeleter;
+import com.cgvsu.exceptions.NullModelException;
 import com.cgvsu.objreader.IncorrectFileException;
 import com.cgvsu.objreader.ObjReaderException;
 import com.cgvsu.objwriter.ObjWriter;
@@ -91,6 +92,7 @@ public class GuiController {
         try {
             from = Integer.parseInt(verticesFrom.getText());
             count = Integer.parseInt(verticesCount.getText());
+            //todo: catch IncorrectInputException
         } catch (NullPointerException | IllegalArgumentException | IndexOutOfBoundsException exception) {
             showErrorDialog("Incorrect input: " + exception.getMessage());
             return;
@@ -102,7 +104,7 @@ public class GuiController {
                 list.add(i);
             }
             selectedModel = VerticesDeleter.removeVerticesFromModel(selectedModel, list);
-        } catch (IndexOutOfBoundsException | NullPointerException exception) {
+        } catch (IndexOutOfBoundsException | NullModelException exception) {
             showErrorDialog(exception.getMessage());
         }
     }
@@ -115,6 +117,7 @@ public class GuiController {
             from = Integer.parseInt(polygonsFrom.getText());
             count = Integer.parseInt(polygonsCount.getText());
             freeVert = freeVertices.isSelected();
+            //todo: catch IncorrectInputException
         } catch (NullPointerException | IllegalArgumentException | IndexOutOfBoundsException exception) {
             showErrorDialog("Incorrect input: " + exception.getMessage());
             return;
@@ -126,7 +129,7 @@ public class GuiController {
                 list.add(i);
             }
             selectedModel = PolygonsDeleter.deletePolygons(selectedModel, list, freeVert);
-        } catch (IndexOutOfBoundsException | NullPointerException exception) {
+        } catch (IndexOutOfBoundsException | NullModelException exception) {
             showErrorDialog(exception.getMessage());
         }
     }
@@ -149,7 +152,7 @@ public class GuiController {
             selectedModel = ObjReader.read(fileContent);
             selectedModel.setPath(fileName);
         } catch (ObjReaderException | IOException | IncorrectFileException exception) {
-            //todo: catch MalformedInputException
+            //todo: catch MalformedInputException СРОЧНО
             showErrorDialog(exception.getMessage());
         }
     }
@@ -159,7 +162,16 @@ public class GuiController {
         //todo: При сохранении модели следует выбирать, учитывать
         // трансформации модели или нет. То есть нужна возможность сохранить как
         // исходную модель, так и модель после преобразований.
-        String fileName = selectedModel.getPath().toString();
+
+        String fileName;
+
+        try {
+            fileName = selectedModel.getPath().toString();
+            //todo: catch NullModelException
+        } catch (NullModelException exception) {
+            showErrorDialog(exception.getMessage());
+            return;
+        }
 
         try {
             ObjWriter.write(fileName, selectedModel);
@@ -168,8 +180,9 @@ public class GuiController {
         }
     }
 
-    //todo: сцена, несколько моделей
-    //todo: окно для аффинных преобразований, масштабирование, вращение, перенос xyz
+    //todo: сцена, несколько моделей СРОЧНО
+    //todo: окно для аффинных преобразований, масштабирование, вращение, перенос xyz СРОЧНО
+
     //todo: управление камерой, добавить кнопки
     // Сейчас взаимодействие с камерой не очень удобное, используется только клавиатура. Но можно переделать его, добавив в систему
     // мышь. За основу можете взять управление из компьютерной игры или приложения для работы с трехмерной графикой. Здесь хорошо бы продумать

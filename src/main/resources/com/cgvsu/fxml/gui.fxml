@@ -62,7 +62,7 @@
     <Canvas fx:id="canvas" height="725.0" width="1280" AnchorPane.topAnchor="25.0" />
    <TitledPane animated="false" layoutY="25.0" text="Deleter">
      <content>
-       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="316.0">
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="315.0">
             <children>
                <TextField fx:id="polygonsFrom" layoutX="10.0" layoutY="27.0" prefHeight="25.0" prefWidth="55.0" />
                <TextField fx:id="polygonsCount" layoutX="71.0" layoutY="27.0" prefHeight="25.0" prefWidth="55.0" />
@@ -81,6 +81,7 @@
                <Text layoutX="26.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" />
                <Text layoutX="82.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Count" />
                <CheckBox fx:id="freeVertices" layoutX="133.0" layoutY="31.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="free vertices" />
+               <Button layoutX="103.0" layoutY="101.0" mnemonicParsing="false" onAction="#onSaveModelMenuItemClick" prefHeight="35.0" prefWidth="110.0" text="Save model" />
             </children>
          </AnchorPane>
      </content>
