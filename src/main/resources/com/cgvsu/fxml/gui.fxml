@@ -21,9 +21,9 @@
     <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#onOpenModelMenuItemClick" text="Load model">
-            <accelerator>
-                <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-            </accelerator>
+                <accelerator>
+                    <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                </accelerator>
             </MenuItem>
             <MenuItem mnemonicParsing="false" onAction="#onSaveModelMenuItemClick" text="Save model">
                 <accelerator>
@@ -71,59 +71,157 @@
     </MenuBar>
 
     <Canvas fx:id="canvas" height="725.0" width="1280" AnchorPane.topAnchor="25.0" />
-   <TitledPane animated="false" layoutY="25.0" text="Deleter">
-     <content>
-       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="315.0">
-            <children>
-               <TextField fx:id="polygonsFrom" layoutX="10.0" layoutY="27.0" prefHeight="25.0" prefWidth="55.0" />
-               <TextField fx:id="polygonsCount" layoutX="71.0" layoutY="27.0" prefHeight="25.0" prefWidth="55.0" />
-               <Button layoutX="225.0" layoutY="27.0" minWidth="55.0" mnemonicParsing="false" onAction="#deletePolygons" prefHeight="25.0" prefWidth="55.0" text="Polygons">
-                  <font>
-                     <Font size="10.0" />
-                  </font>
-               </Button>
-             <Button layoutX="225.0" layoutY="65.0" mnemonicParsing="false" onAction="#deleteVertices" prefHeight="25.0" prefWidth="55.0" text="Vertices">
-                  <font>
-                     <Font size="10.0" />
-                  </font>
-               </Button>
-               <TextField fx:id="verticesFrom" layoutX="10.0" layoutY="65.0" prefHeight="25.0" prefWidth="55.0" />
-               <TextField fx:id="verticesCount" layoutX="71.0" layoutY="65.0" prefHeight="25.0" prefWidth="55.0" />
-               <Text layoutX="26.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" />
-               <Text layoutX="82.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Count" />
-               <CheckBox fx:id="freeVertices" layoutX="133.0" layoutY="31.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="free vertices" />
-               <Button layoutX="103.0" layoutY="101.0" mnemonicParsing="false" onAction="#onSaveModelMenuItemClick" prefHeight="35.0" prefWidth="110.0" text="Save model" />
-            </children>
-         </AnchorPane>
-     </content>
-   </TitledPane>
-   <TitledPane animated="false" layoutY="201.0" prefHeight="318.0" prefWidth="412.0" text="Panel">
-     <content>
-       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="292.0" prefWidth="467.0">
-            <children>
-               <TabPane prefHeight="290.0" prefWidth="412.0" tabClosingPolicy="UNAVAILABLE">
-                 <tabs>
-                   <Tab text="Models">
-                     <content>
-                       <AnchorPane minHeight="0.0" minWidth="0.0">
-                              <children>
-                                 <ListView fx:id="viewModels" layoutX="-1.0" prefHeight="263.0" prefWidth="412.0">
-                                    <contextMenu>
-                                       <ContextMenu>
-                                         <items>
-                                             <MenuItem mnemonicParsing="false" onAction="#onSaveModelMenuItemClick" text="Save model"/>
-                                             <MenuItem mnemonicParsing="false" onAction="#onDeleteMenuItemClick" text="Delete model"/>
-                                         </items>
-                                       </ContextMenu>
-                                    </contextMenu></ListView>
-                              </children>
-                           </AnchorPane>
-                     </content>
-                   </Tab>
-                 </tabs>
-               </TabPane>
-            </children>
-         </AnchorPane>
-     </content>
-   </TitledPane>
+    <TitledPane animated="false" layoutY="25.0" text="Deleter">
+        <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="315.0">
+                <children>
+                    <TextField fx:id="polygonsFrom" layoutX="10.0" layoutY="27.0" prefHeight="25.0" prefWidth="55.0" />
+                    <TextField fx:id="polygonsCount" layoutX="71.0" layoutY="27.0" prefHeight="25.0" prefWidth="55.0" />
+                    <Button layoutX="225.0" layoutY="27.0" minWidth="55.0" mnemonicParsing="false" onAction="#deletePolygons" prefHeight="25.0" prefWidth="55.0" text="Polygons">
+                        <font>
+                            <Font size="10.0" />
+                        </font>
+                    </Button>
+                    <Button layoutX="225.0" layoutY="65.0" mnemonicParsing="false" onAction="#deleteVertices" prefHeight="25.0" prefWidth="55.0" text="Vertices">
+                        <font>
+                            <Font size="10.0" />
+                        </font>
+                    </Button>
+                    <TextField fx:id="verticesFrom" layoutX="10.0" layoutY="65.0" prefHeight="25.0" prefWidth="55.0" />
+                    <TextField fx:id="verticesCount" layoutX="71.0" layoutY="65.0" prefHeight="25.0" prefWidth="55.0" />
+                    <Text layoutX="26.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" />
+                    <Text layoutX="82.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Count" />
+                    <CheckBox fx:id="freeVertices" layoutX="133.0" layoutY="31.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="free vertices" />
+                    <Button layoutX="103.0" layoutY="101.0" mnemonicParsing="false" onAction="#onSaveModelMenuItemClick" prefHeight="35.0" prefWidth="110.0" text="Save model" />
+                </children>
+            </AnchorPane>
+        </content>
+    </TitledPane>
+    <TitledPane animated="false" layoutY="201.0" prefHeight="318.0" prefWidth="412.0" text="Panel">
+        <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="292.0" prefWidth="467.0">
+                <children>
+                    <TabPane prefHeight="290.0" prefWidth="412.0" tabClosingPolicy="UNAVAILABLE">
+                        <tabs>
+                            <Tab text="Models">
+                                <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0">
+                                        <children>
+                                            <ListView fx:id="viewModels" layoutX="-1.0" prefHeight="263.0" prefWidth="412.0">
+                                                <contextMenu>
+                                                    <ContextMenu>
+                                                        <items>
+                                                            <MenuItem mnemonicParsing="false" onAction="#onSaveModelMenuItemClick" text="Save model" />
+                                                            <MenuItem mnemonicParsing="false" onAction="#onDeleteMenuItemClick" text="Delete model">
+                                                                <accelerator>
+                                                                    <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                                                </accelerator>
+                                                            </MenuItem>
+                                                        </items>
+                                                    </ContextMenu>
+                                                </contextMenu>
+                                            </ListView>
+                                        </children>
+                                    </AnchorPane>
+                                </content>
+                            </Tab>
+                        </tabs>
+                    </TabPane>
+                </children>
+            </AnchorPane>
+        </content>
+    </TitledPane>
+    <TitledPane animated="false" layoutX="1064.0" layoutY="25.0" text="Transformation">
+        <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <children>
+                    <TabPane prefHeight="182.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                        <tabs>
+                            <Tab text="Scale">
+                                <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                        <children>
+                                            <TextField fx:id="scaleX" layoutX="100.0" layoutY="14.0" prefHeight="25.0" prefWidth="86.0" text="1" />
+                                            <TextField fx:id="scaleY" layoutX="100.0" layoutY="45.0" prefHeight="25.0" prefWidth="86.0" text="1" />
+                                            <TextField fx:id="scaleZ" layoutX="100.0" layoutY="77.0" prefHeight="25.0" prefWidth="86.0" text="1" />
+                                            <Text layoutX="24.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scale X">
+                                                <font>
+                                                    <Font size="16.0" />
+                                                </font>
+                                            </Text>
+                                            <Text layoutX="24.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scale Y">
+                                                <font>
+                                                    <Font size="16.0" />
+                                                </font>
+                                            </Text>
+                                            <Text layoutX="24.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scale Z">
+                                                <font>
+                                                    <Font size="16.0" />
+                                                </font>
+                                            </Text>
+                                            <Button layoutX="36.0" layoutY="114.0" mnemonicParsing="false" onAction="#handleScale" text="Apply transformation" />
+                                        </children>
+                                    </AnchorPane>
+                                </content>
+                            </Tab>
+                            <Tab text="Rotate">
+                                <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                        <children>
+                                            <TextField fx:id="rotateX" layoutX="100.0" layoutY="14.0" prefHeight="25.0" prefWidth="86.0" text="0" />
+                                            <TextField fx:id="rotateY" layoutX="100.0" layoutY="45.0" prefHeight="25.0" prefWidth="86.0" text="0" />
+                                            <TextField fx:id="rotateZ" layoutX="100.0" layoutY="77.0" prefHeight="25.0" prefWidth="86.0" text="0" />
+                                            <Text layoutX="19.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rotate X">
+                                                <font>
+                                                    <Font size="16.0" />
+                                                </font>
+                                            </Text>
+                                            <Text layoutX="19.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rotate Y">
+                                                <font>
+                                                    <Font size="16.0" />
+                                                </font>
+                                            </Text>
+                                            <Text layoutX="19.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rotate Z">
+                                                <font>
+                                                    <Font size="16.0" />
+                                                </font>
+                                            </Text>
+                                            <Button layoutX="36.0" layoutY="114.0" mnemonicParsing="false" onAction="#handleRotate" text="Apply transformation" />
+                                        </children>
+                                    </AnchorPane>
+                                </content>
+                            </Tab>
+                            <Tab text="Translate">
+                                <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                        <children>
+                                            <TextField fx:id="translateX" layoutX="100.0" layoutY="14.0" prefHeight="25.0" prefWidth="86.0" text="1" />
+                                            <TextField fx:id="translateY" layoutX="100.0" layoutY="45.0" prefHeight="25.0" prefWidth="86.0" text="1" />
+                                            <TextField fx:id="translateZ" layoutX="100.0" layoutY="77.0" prefHeight="25.0" prefWidth="86.0" text="1" />
+                                            <Text layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Translate X">
+                                                <font>
+                                                    <Font size="16.0" />
+                                                </font>
+                                            </Text>
+                                            <Text layoutX="14.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Translate Y">
+                                                <font>
+                                                    <Font size="16.0" />
+                                                </font>
+                                            </Text>
+                                            <Text layoutX="14.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Translate Z">
+                                                <font>
+                                                    <Font size="16.0" />
+                                                </font>
+                                            </Text>
+                                            <Button layoutX="36.0" layoutY="114.0" mnemonicParsing="false" onAction="#handleTranslate" text="Apply transformation" />
+                                        </children>
+                                    </AnchorPane>
+                                </content>
+                            </Tab>
+                        </tabs>
+                    </TabPane>
+                </children>
+            </AnchorPane>
+        </content>
+    </TitledPane>
 </AnchorPane>

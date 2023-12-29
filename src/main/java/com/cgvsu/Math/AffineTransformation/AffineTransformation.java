@@ -44,7 +44,7 @@ public class AffineTransformation {
         return rotationMatrix;
     }
 
-    public Matrix translate(float tX, float tY, float tZ) {
+    public Matrix translate(double tX, double tY, double tZ) {
         FourDimensionalMatrix translationMatrix = new FourDimensionalMatrix(
                 new NDimensionalVector(1,0,0,0),
                 new NDimensionalVector(0,1,0,0),

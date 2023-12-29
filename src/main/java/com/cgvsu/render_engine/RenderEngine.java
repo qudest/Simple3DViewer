@@ -1,8 +1,11 @@
 package com.cgvsu.render_engine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.cgvsu.Math.AffineTransformation.AffineTransformation;
 import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
 import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Point.Point2f;
@@ -14,7 +17,7 @@ import static com.cgvsu.render_engine.GraphicConveyor.*;
 public class RenderEngine {
     private final GraphicsContext graphicsContext;
     private final Camera camera;
-    private final List<Model> models = new ArrayList<>();
+    private final Map<String, Model> models = new HashMap<>();
     private int width;
     private int height;
 
@@ -35,10 +38,10 @@ public class RenderEngine {
     }
 
     public void addModel(Model model) {
-        models.add(model);
+        models.put(model.getPath().toString(), model);
     }
 
-    public List<Model> getModels() {
+    public Map<String, Model> getModels() {
         return models;
     }
 
@@ -58,12 +61,15 @@ public class RenderEngine {
         modelViewProjectionMatrix = (NDimensionalMatrix)  modelViewProjectionMatrix.multiplyMatrix(viewMatrix);
         modelViewProjectionMatrix = (NDimensionalMatrix)  modelViewProjectionMatrix.multiplyMatrix(projectionMatrix);
 
-        for (Model mesh: models) {
+        for (Model mesh: models.values()) {
             drawPolygons(mesh, modelViewProjectionMatrix);
         }
     }
 
     private void drawPolygons(Model mesh, NDimensionalMatrix modelViewProjectionMatrix) {
+        NDimensionalMatrix affineMatrix = (NDimensionalMatrix) new AffineTransformation().scale(mesh.scaleX, mesh.scaleY, mesh.scaleZ)
+                .multiplyMatrix(new AffineTransformation().rotate((float) (mesh.rotateX), (float) (mesh.rotateY), (float) (mesh.rotateZ)))
+                .multiplyMatrix(new AffineTransformation().translate(mesh.translateX, mesh.translateY, mesh.translateZ));
         final int nPolygons = mesh.getPolygons().size();
         for (int polygonInd = 0; polygonInd < nPolygons; ++polygonInd) {
             final int nVerticesInPolygon = mesh.getPolygons().get(polygonInd).getVertexIndices().size();
@@ -73,7 +79,7 @@ public class RenderEngine {
 
 
                 ThreeDimensionalVector vertex = mesh.getVertices().get(mesh.getPolygons().get(polygonInd).getVertexIndices().get(vertexInPolygonInd));
-                Point2f resultPoint = vertexToPoint(multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertex), width, height);
+                Point2f resultPoint = vertexToPoint(multiplyMatrix4ByVector3(modelViewProjectionMatrix, multiplyMatrix4ByVector3(affineMatrix, vertex)), width, height);
 
                 resultPoints.add(resultPoint);
             }
