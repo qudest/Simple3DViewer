@@ -1,6 +1,7 @@
 package com.cgvsu;
 
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
+import com.cgvsu.Math.Vectors.TwoDimensionalVector;
 import com.cgvsu.deleter.PolygonsDeleter;
 import com.cgvsu.deleter.VerticesDeleter;
 import com.cgvsu.exceptions.NullModelException;
@@ -96,6 +97,7 @@ public class GuiController {
 
         timeline.getKeyFrames().add(frame);
         timeline.play();
+
     }
 
     @FXML

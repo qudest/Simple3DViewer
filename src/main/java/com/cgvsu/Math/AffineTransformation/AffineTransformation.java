@@ -1,8 +1,6 @@
 package com.cgvsu.Math.AffineTransformation;
 import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
 import com.cgvsu.Math.Matrix.Matrix;
-import com.cgvsu.Math.Matrix.NDimensionalMatrix;
-import com.cgvsu.Math.Vectors.FourDimensionalVector;
 import com.cgvsu.Math.Vectors.NDimensionalVector;
 
 public class AffineTransformation {

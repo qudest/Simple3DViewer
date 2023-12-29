@@ -12,18 +12,10 @@ import com.cgvsu.Math.Vectors.Vector;
 
 public class GraphicConveyor {
 
-    //    public static FourDimensionalMatrix rotateScaleTranslate(){
-//        return new FourDimensionalMatrix(
-//                new FourDimensionalVector(1,0,0,0),
-//                new FourDimensionalVector(0,1,0,0),
-//                new FourDimensionalVector(0,0,1,0),
-//                new FourDimensionalVector(0,0,0,1)
-//        );
-//    }
-    private static NDimensionalMatrix getScaleMatrix(ThreeDimensionalVector scale) {
-        NDimensionalVector v1 = new NDimensionalVector(1, 0, 0, 0);
-        NDimensionalVector v2 = new NDimensionalVector(0, 1, 0, 0);
-        NDimensionalVector v3 = new NDimensionalVector(0, 0, 1, 0);
+    protected static NDimensionalMatrix getScaleMatrix(ThreeDimensionalVector scale) {
+        NDimensionalVector v1 = new NDimensionalVector(scale.getA(), 0, 0, 0);
+        NDimensionalVector v2 = new NDimensionalVector(0, scale.getB(), 0, 0);
+        NDimensionalVector v3 = new NDimensionalVector(0, 0, scale.getC(), 0);
         NDimensionalVector v4 = new NDimensionalVector(0, 0, 0, 1);
 
         return new NDimensionalMatrix(v1, v2, v3, v4);
@@ -35,7 +27,7 @@ public class GraphicConveyor {
 
         return (NDimensionalMatrix) matrixRotationX.multiplyMatrix(matrixRotationY).multiplyMatrix(matrixRotationZ);
     }
-    private static NDimensionalMatrix getRotationMatrixX(double xAngle) {
+    protected static NDimensionalMatrix getRotationMatrixX(double xAngle) {
         xAngle = Math.toRadians(xAngle);
         double cosX = Math.cos(xAngle);
         double sinX = Math.sin(xAngle);
@@ -133,5 +125,5 @@ public class GraphicConveyor {
 
     public static Point2f vertexToPoint(final ThreeDimensionalVector vertex, final int width, final int height) {
         return new Point2f((float) (vertex.getA() * width + width / 2.0F), (float) (-vertex.getB() * height + height / 2.0F));
-    }
+    } // TODO: исправить костыль
 }

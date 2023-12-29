@@ -1,28 +1,41 @@
 package com.cgvsu.Math.Coordinate;
 
+import com.cgvsu.Math.Vectors.TwoDimensionalVector;
+
 public class BarycentricCoordinates {
-    float u;
-    float v;
-    float w;
+    private final double u;
+    private final double v;
+    private final double w;
 
-    public BarycentricCoordinates(float x, float y, float x1, float x2, float x3, float y1, float y2, float y3){
-        float triangleArea = (y1 - y3) * (x2 - x3) + (y2 - y3) * (x3 - x1);
-        this.u = ((y - y3) * (x2 - x3) + (y2 - y3) * (x3 - x)) / triangleArea;
-        this.v = ((y - y1) * (x3 - x1) + (y3 - y1) * (x1 - x)) / triangleArea;
-        this.w = ((y - y2) * (x1 - x2) + (y1 - y2) * (x2 - x)) / triangleArea;
-    }
-
-    public float getU() {
+    public double getU() {
         return u;
     }
 
-    public float getV() {
+    public double getV() {
         return v;
     }
 
-
-    public float getW() {
+    public double getW() {
         return w;
+    }
+
+    public BarycentricCoordinates(TwoDimensionalVector a, TwoDimensionalVector b, TwoDimensionalVector c, TwoDimensionalVector p) {
+        double s = (b.getA() - a.getA()) * (c.getB() - a.getB()) -
+                (c.getA() - a.getA()) * (b.getB() - a.getB());
+        if (s == 0) {
+            throw new IllegalArgumentException("The points do not form a valid triangle (area is zero)");
+        }
+        double s1 = (b.getA() - p.getA()) * (c.getB() - p.getB()) -
+                (c.getA() - p.getA()) * (b.getB() - p.getB());
+        double s2 = (c.getA() - p.getA()) * (a.getB() - p.getB()) -
+                (a.getA() - p.getA()) * (c.getB() - p.getB());
+        u = s1 / s;
+        v = s2 / s;
+        w = 1 - u - v;
+    }
+
+    public boolean belongsToTriangle() {
+        return u >= 0 && u <= 1 && v >= 0 && v <= 1 && w >= 0 && w <= 1;
     }
 
 }

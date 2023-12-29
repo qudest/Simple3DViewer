@@ -3,6 +3,7 @@ package com.cgvsu.render_engine;
 import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
 import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
+import com.cgvsu.Math.Vectors.TwoDimensionalVector;
 
 public class CameraController {
     private ThreeDimensionalVector forwardV;

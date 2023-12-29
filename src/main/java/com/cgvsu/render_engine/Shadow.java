@@ -25,6 +25,6 @@ public class Shadow {
     }
 
     public float calculateShadeCoefficients(BarycentricCoordinates bCoordinates){
-        return bCoordinates.getU() * c1 + bCoordinates.getV() * c2 + bCoordinates.getW() * c3;
+        return (float) (bCoordinates.getU() * c1 + bCoordinates.getV() * c2 + bCoordinates.getW() * c3);
     }
 }
