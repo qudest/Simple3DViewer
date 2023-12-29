@@ -18,6 +18,8 @@ public class RenderEngine {
     private final GraphicsContext graphicsContext;
     private final Camera camera;
     private final Map<String, Model> models = new HashMap<>();
+
+    private CameraController cameraController;
     private int width;
     private int height;
 
@@ -37,8 +39,16 @@ public class RenderEngine {
         this.height = height;
     }
 
+    public CameraController getCameraController() {
+        return cameraController;
+    }
+
+    public void setCameraController(CameraController cameraController) {
+        this.cameraController = cameraController;
+    }
+
     public void addModel(Model model) {
-        models.put(model.getPath().toString(), model);
+        models.put(model.getPath(), model);
     }
 
     public Map<String, Model> getModels() {

@@ -1,6 +1,5 @@
 package com.cgvsu.render_engine;
 
-import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
 import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
 import com.cgvsu.Math.Vectors.TwoDimensionalVector;
@@ -45,11 +44,11 @@ public class CameraController {
         camera.moveCamera(upV);
     }
 
-
     public void handleCameraDown() {
         camera.moveCamera(downV);
     }
-    public void rotateCamera(final ThreeDimensionalVector angleOfRotate) throws Exception {
+
+    public void rotateCamera(final TwoDimensionalVector angleOfRotate) {
         if (angleOfRotate.getA() >= 90) {
             angleOfRotate.setA(89.9F);
         } else if (angleOfRotate.getB() <= -90) {
@@ -62,7 +61,6 @@ public class CameraController {
         }
 
         NDimensionalMatrix mR = GraphicConveyor.getRotationMatrix(new ThreeDimensionalVector(angleOfRotate.getB(), 0,0));
-
         forwardV = GraphicConveyor.multiplyMatrix4ByVector3(mR, forwardV);
         backwardV = GraphicConveyor.multiplyMatrix4ByVector3(mR, backwardV);
         leftV = GraphicConveyor.multiplyMatrix4ByVector3(mR, leftV);
