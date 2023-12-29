@@ -12,6 +12,7 @@ import com.cgvsu.render_engine.camera.Camera;
 import com.cgvsu.render_engine.camera.CameraController;
 import javafx.scene.canvas.GraphicsContext;
 import com.cgvsu.model.Model;
+
 import static com.cgvsu.render_engine.graphicConveyor.GraphicConveyor.*;
 
 public class RenderEngine {
@@ -63,15 +64,15 @@ public class RenderEngine {
     }
 
     public void render() {
-        NDimensionalMatrix modelMatrix = getModelMatrix(new ThreeDimensionalVector(0,0,0), new ThreeDimensionalVector(0,0,0), new ThreeDimensionalVector(1,1,1));
-        NDimensionalMatrix viewMatrix =  camera.getViewMatrix();
+        NDimensionalMatrix modelMatrix = getModelMatrix(new ThreeDimensionalVector(0, 0, 0), new ThreeDimensionalVector(0, 0, 0), new ThreeDimensionalVector(1, 1, 1));
+        NDimensionalMatrix viewMatrix = camera.getViewMatrix();
         NDimensionalMatrix projectionMatrix = camera.getProjectionMatrix();
 
         NDimensionalMatrix modelViewProjectionMatrix = modelMatrix;
-        modelViewProjectionMatrix = (NDimensionalMatrix)  modelViewProjectionMatrix.multiplyMatrix(viewMatrix);
-        modelViewProjectionMatrix = (NDimensionalMatrix)  modelViewProjectionMatrix.multiplyMatrix(projectionMatrix);
+        modelViewProjectionMatrix = (NDimensionalMatrix) modelViewProjectionMatrix.multiplyMatrix(viewMatrix);
+        modelViewProjectionMatrix = (NDimensionalMatrix) modelViewProjectionMatrix.multiplyMatrix(projectionMatrix);
 
-        for (Model mesh: models.values()) {
+        for (Model mesh : models.values()) {
             drawPolygons(mesh, modelViewProjectionMatrix);
         }
     }

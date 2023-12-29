@@ -64,7 +64,7 @@ public class GuiController {
     private boolean isRotationActive;
 
     private final TwoDimensionalVector currentMouseCoordinates = new TwoDimensionalVector(0, 0);
-    private final TwoDimensionalVector centerCoordinates = new TwoDimensionalVector(0 , 0);
+    private final TwoDimensionalVector centerCoordinates = new TwoDimensionalVector(0, 0);
 
     private Model selectedModel = null;
 
@@ -103,7 +103,7 @@ public class GuiController {
             }
 
             canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            camera.setAspectRatio((float)(canvas.getWidth() / canvas.getHeight()));
+            camera.setAspectRatio((float) (canvas.getWidth() / canvas.getHeight()));
 
             renderEngine.render();
         });
@@ -304,7 +304,7 @@ public class GuiController {
     }
 
     private void handleModelSelection(String modelName) {
-        for (Model model: renderEngine.getModels().values()) {
+        for (Model model : renderEngine.getModels().values()) {
             if (model.getPath().equals(modelName)) {
                 selectedModel = model;
                 break;
@@ -400,7 +400,7 @@ public class GuiController {
 
     @FXML
     public void currentMouseCoordinates(MouseEvent mouseDragEvent) {
-        currentMouseCoordinates.setA( (float) mouseDragEvent.getX());
-        currentMouseCoordinates.setB( (float) mouseDragEvent.getY());
+        currentMouseCoordinates.setA((float) mouseDragEvent.getX());
+        currentMouseCoordinates.setB((float) mouseDragEvent.getY());
     }
 }

@@ -11,7 +11,7 @@ public class CameraController {
     private ThreeDimensionalVector leftV;
     private ThreeDimensionalVector rightV;
     private ThreeDimensionalVector upV;
-    private  ThreeDimensionalVector downV;
+    private ThreeDimensionalVector downV;
     private final Camera camera;
 
     public CameraController(Camera camera, float translation) {
@@ -23,6 +23,7 @@ public class CameraController {
         upV = new ThreeDimensionalVector(0, translation, 0);
         downV = new ThreeDimensionalVector(0, -translation, 0);
     }
+
     public void handleCameraForward() {
         camera.moveCamera(forwardV);
     }
@@ -61,12 +62,12 @@ public class CameraController {
             angleOfRotate.setA(-89.9F);
         }
 
-        NDimensionalMatrix mR = GraphicConveyor.getRotationMatrix(new ThreeDimensionalVector(angleOfRotate.getB(), 0,0));
+        NDimensionalMatrix mR = GraphicConveyor.getRotationMatrix(new ThreeDimensionalVector(angleOfRotate.getB(), 0, 0));
         forwardV = GraphicConveyor.multiplyMatrix4ByVector3(mR, forwardV);
         backwardV = GraphicConveyor.multiplyMatrix4ByVector3(mR, backwardV);
         leftV = GraphicConveyor.multiplyMatrix4ByVector3(mR, leftV);
         rightV = GraphicConveyor.multiplyMatrix4ByVector3(mR, rightV);
-        mR = GraphicConveyor.getRotationMatrix(new ThreeDimensionalVector(angleOfRotate.getB(), angleOfRotate.getA(),0));
+        mR = GraphicConveyor.getRotationMatrix(new ThreeDimensionalVector(angleOfRotate.getB(), angleOfRotate.getA(), 0));
         camera.rotateCamera(mR);
     }
 

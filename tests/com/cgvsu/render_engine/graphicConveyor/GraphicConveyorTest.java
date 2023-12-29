@@ -16,8 +16,8 @@ public class GraphicConveyorTest {
 
         float[][] expectedValues = {
                 {1, 0, 0, 0},
-                {0, 0, -1, 0},
-                {0, 1, 0, 0},
+                {0, 0, 1, 0},
+                {0, -1, 0, 0},
                 {0, 0, 0, 1}
         };
 
@@ -52,8 +52,8 @@ public class GraphicConveyorTest {
 
         float[][] expectedValues = {
                 {1, 0, 0, 0},
-                {0, 0, -1, 0},
-                {0, 1, 0, 0},
+                {0, 0, 1, 0},
+                {0, -1, 0, 0},
                 {0, 0, 0, 1}
         };
 

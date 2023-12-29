@@ -8,7 +8,7 @@ public class Shadow {
     float c2;
     float c3;
 
-    public Shadow(ThreeDimensionalVector[] normals, ThreeDimensionalVector target, ThreeDimensionalVector position){
+    public Shadow(ThreeDimensionalVector[] normals, ThreeDimensionalVector target, ThreeDimensionalVector position) {
         this.c1 = calculateShade(normals[0], target, position);
         this.c2 = calculateShade(normals[1], target, position);
         this.c3 = calculateShade(normals[2], target, position);
@@ -24,7 +24,7 @@ public class Shadow {
         return Float.max(0.8f, Math.abs(cosine));
     }
 
-    public float calculateShadeCoefficients(BarycentricCoordinates bCoordinates){
+    public float calculateShadeCoefficients(BarycentricCoordinates bCoordinates) {
         return (float) (bCoordinates.getU() * c1 + bCoordinates.getV() * c2 + bCoordinates.getW() * c3);
     }
 }

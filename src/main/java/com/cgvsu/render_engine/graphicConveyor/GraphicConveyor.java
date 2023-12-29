@@ -17,6 +17,7 @@ public class GraphicConveyor {
 
         return new NDimensionalMatrix(v1, v2, v3, v4);
     }
+
     public static NDimensionalMatrix getRotationMatrix(ThreeDimensionalVector angle) {
         NDimensionalMatrix matrixRotationX = getRotationMatrixX(angle.getA());
         NDimensionalMatrix matrixRotationY = getRotationMatrixY(angle.getB());
@@ -24,6 +25,7 @@ public class GraphicConveyor {
 
         return (NDimensionalMatrix) matrixRotationX.multiplyMatrix(matrixRotationY).multiplyMatrix(matrixRotationZ);
     }
+
     protected static NDimensionalMatrix getRotationMatrixX(double xAngle) {
         xAngle = Math.toRadians(xAngle);
         double cosX = Math.cos(xAngle);
@@ -36,6 +38,7 @@ public class GraphicConveyor {
 
         return new NDimensionalMatrix(v1, v2, v3, v4);
     }
+
     private static NDimensionalMatrix getRotationMatrixY(double yAngle) {
         yAngle = Math.toRadians(yAngle);
         double cosY = Math.cos(yAngle);
@@ -48,6 +51,7 @@ public class GraphicConveyor {
 
         return new NDimensionalMatrix(v1, v2, v3, v4);
     }
+
     private static NDimensionalMatrix getRotationMatrixZ(double zAngle) {
         zAngle = Math.toRadians(zAngle);
         double cosZ = Math.cos(zAngle);
@@ -60,14 +64,16 @@ public class GraphicConveyor {
 
         return new NDimensionalMatrix(v1, v2, v3, v4);
     }
+
     private static NDimensionalMatrix getTranslationMatrix(ThreeDimensionalVector translate) {
-        NDimensionalVector  v1 = new NDimensionalVector(1, 0, 0, translate.getA());
-        NDimensionalVector  v2 = new NDimensionalVector(0, 1, 0, translate.getB());
-        NDimensionalVector  v3 = new NDimensionalVector(0, 0, 1, translate.getC());
-        NDimensionalVector  v4 = new NDimensionalVector(0, 0, 0, 1);
+        NDimensionalVector v1 = new NDimensionalVector(1, 0, 0, translate.getA());
+        NDimensionalVector v2 = new NDimensionalVector(0, 1, 0, translate.getB());
+        NDimensionalVector v3 = new NDimensionalVector(0, 0, 1, translate.getC());
+        NDimensionalVector v4 = new NDimensionalVector(0, 0, 0, 1);
 
         return new NDimensionalMatrix(v1, v2, v3, v4);
     }
+
     public static NDimensionalMatrix getModelMatrix(ThreeDimensionalVector translate, ThreeDimensionalVector anglesOfRotate, ThreeDimensionalVector scale) {
         NDimensionalMatrix translationMatrix = getTranslationMatrix(translate);
         NDimensionalMatrix rotationMatrix = getRotationMatrix(anglesOfRotate);
@@ -75,6 +81,7 @@ public class GraphicConveyor {
 
         return (NDimensionalMatrix) translationMatrix.multiplyMatrix(rotationMatrix).multiplyMatrix(scaleMatrix);
     }
+
     public static NDimensionalMatrix lookAt(ThreeDimensionalVector eye, ThreeDimensionalVector target) {
         return lookAt(new ThreeDimensionalVector(eye.getArrValues()[0], eye.getArrValues()[1], eye.getArrValues()[2]), new ThreeDimensionalVector(target.getArrValues()[0], target.getArrValues()[1], target.getArrValues()[2]), new ThreeDimensionalVector(0F, 1.0F, 0F));
     }
