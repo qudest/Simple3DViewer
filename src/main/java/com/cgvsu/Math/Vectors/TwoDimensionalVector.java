@@ -4,8 +4,16 @@ import static java.lang.Math.abs;
 /** @author <a href="https://github.com/valyalshikovd/LinearAlgebra">Валяльщиков Дмитрий Алексеевич</a> */
 public class TwoDimensionalVector extends NDimensionalVector  {
 
-    final private  double a;
-    final private double b;
+    private  double a;
+    private double b;
+
+    public void setA(double a) {
+        this.a = a;
+    }
+
+    public void setB(double b) {
+        this.b = b;
+    }
 
     public double getA() {
         return a;

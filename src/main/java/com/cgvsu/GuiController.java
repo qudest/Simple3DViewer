@@ -1,6 +1,7 @@
 package com.cgvsu;
 
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
+import com.cgvsu.Math.Vectors.TwoDimensionalVector;
 import com.cgvsu.deleter.PolygonsDeleter;
 import com.cgvsu.deleter.VerticesDeleter;
 import com.cgvsu.exceptions.NullModelException;
@@ -8,6 +9,7 @@ import com.cgvsu.objreader.IncorrectFileException;
 import com.cgvsu.objreader.ObjReaderException;
 import com.cgvsu.objwriter.ObjWriter;
 import com.cgvsu.objwriter.ObjWriterException;
+import com.cgvsu.render_engine.CameraController;
 import com.cgvsu.render_engine.RenderEngine;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +24,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
@@ -40,7 +43,7 @@ import com.cgvsu.render_engine.Camera;
 
 public class GuiController {
 
-    final private float TRANSLATION = 5F;
+    final private float TRANSLATION = 1F;
     @FXML
     private ListView<String> viewModels = new ListView<>();
 
@@ -58,6 +61,11 @@ public class GuiController {
 
     private RenderEngine renderEngine;
     private int countId = 1;
+
+    private boolean isRotationActive;
+
+    private final TwoDimensionalVector currentMouseCoordinates = new TwoDimensionalVector(0, 0);
+    private final TwoDimensionalVector centerCoordinates = new TwoDimensionalVector(0 , 0);
 
     private Model selectedModel = null;
 
@@ -85,9 +93,15 @@ public class GuiController {
 
         renderEngine = new RenderEngine(canvas.getGraphicsContext2D(), camera, (int) canvas.getWidth(), (int) canvas.getHeight());
 
+        renderEngine.setCameraController(new CameraController(camera, TRANSLATION));
+
         KeyFrame frame = new KeyFrame(Duration.millis(30), event -> {
             renderEngine.setWidth((int) canvas.getWidth());
             renderEngine.setHeight((int) canvas.getHeight());
+
+            if (isRotationActive) {
+                rotateCamera();
+            }
 
             canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             camera.setAspectRatio((float) (canvas.getWidth() / canvas.getHeight()));
@@ -225,7 +239,7 @@ public class GuiController {
         String fileName;
 
         try {
-            fileName = selectedModel.getPath().toString();
+            fileName = selectedModel.getPath();
             //todo: catch NullModelException
         } catch (NullPointerException exception) {
             showErrorDialog(exception.getMessage());
@@ -299,32 +313,94 @@ public class GuiController {
     }
 
     @FXML
-    public void handleCameraForward(ActionEvent actionEvent) {
-        camera.movePosition(new ThreeDimensionalVector(0, 0, -TRANSLATION));
+    public void handleCameraForward() {
+        try {
+            renderEngine.getCameraController().handleCameraForward();
+        } catch (Exception e) {
+            showErrorDialog(e.getMessage());
+        }
     }
 
     @FXML
-    public void handleCameraBackward(ActionEvent actionEvent) {
-        camera.movePosition(new ThreeDimensionalVector(0, 0, TRANSLATION));
+    public void handleCameraBackward() {
+        try {
+            renderEngine.getCameraController().handleCameraBackward();
+        } catch (Exception e) {
+            showErrorDialog(e.getMessage());
+        }
     }
 
     @FXML
-    public void handleCameraLeft(ActionEvent actionEvent) {
-        camera.movePosition(new ThreeDimensionalVector(TRANSLATION, 0, 0));
+    public void handleCameraLeft() {
+        try {
+            renderEngine.getCameraController().handleCameraLeft();
+        } catch (Exception e) {
+            showErrorDialog(e.getMessage());
+        }
     }
 
     @FXML
-    public void handleCameraRight(ActionEvent actionEvent) {
-        camera.movePosition(new ThreeDimensionalVector(-TRANSLATION, 0, 0));
+    public void handleCameraRight() {
+        try {
+            renderEngine.getCameraController().handleCameraRight();
+        } catch (Exception e) {
+            showErrorDialog(e.getMessage());
+        }
     }
 
     @FXML
-    public void handleCameraUp(ActionEvent actionEvent) {
-        camera.movePosition(new ThreeDimensionalVector(0, TRANSLATION, 0));
+    public void handleCameraUp() {
+        try {
+            renderEngine.getCameraController().handleCameraUp();
+        } catch (Exception e) {
+            showErrorDialog(e.getMessage());
+        }
     }
 
     @FXML
-    public void handleCameraDown(ActionEvent actionEvent) {
-        camera.movePosition(new ThreeDimensionalVector(0, -TRANSLATION, 0));
+    public void handleCameraDown() {
+        try {
+            renderEngine.getCameraController().handleCameraDown();
+        } catch (Exception e) {
+            showErrorDialog(e.getMessage());
+        }
+    }
+
+    @FXML
+    public void takeFocusCanvas() {
+        canvas.requestFocus();
+    }
+
+    @FXML
+    public void canvasDragDroppedGetValue() {
+        isRotationActive = false;
+    }
+
+    @FXML
+    public void canvasDragEnterGetValue() {
+        isRotationActive = true;
+    }
+
+    public void rotateCamera() {
+        centerCoordinates.setA(canvas.getWidth() / 2);
+        centerCoordinates.setB(canvas.getHeight() / 2);
+
+        double diffX = currentMouseCoordinates.getA() - centerCoordinates.getA();
+        double diffY = currentMouseCoordinates.getB() - centerCoordinates.getB();
+
+        double xAngle = (diffX / canvas.getWidth()) * 1;
+        double yAngle = (diffY / canvas.getHeight()) * -1;
+
+        try {
+            renderEngine.getCameraController().rotateCamera(new TwoDimensionalVector(xAngle, yAngle));
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    public void currentMouseCoordinates(MouseEvent mouseDragEvent) {
+        currentMouseCoordinates.setA( (float) mouseDragEvent.getX());
+        currentMouseCoordinates.setB( (float) mouseDragEvent.getY());
     }
 }

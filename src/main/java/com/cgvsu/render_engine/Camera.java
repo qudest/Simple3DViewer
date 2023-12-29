@@ -6,16 +6,16 @@ import com.cgvsu.Math.Vectors.*;
 
 
 public class Camera {
-    private Vector position;
-    private Vector target;
+    private ThreeDimensionalVector position;
+    private ThreeDimensionalVector target;
     private final float fov;
     private float aspectRatio;
     private final float nearPlane;
     private final float farPlane;
 
     public Camera(
-            final Vector position,
-            final Vector target,
+            final ThreeDimensionalVector position,
+            final ThreeDimensionalVector target,
             final float fov,
             final float aspectRatio,
             final float nearPlane,
@@ -28,7 +28,7 @@ public class Camera {
         this.farPlane = farPlane;
     }
 
-    public void setPosition(final Vector position) {
+    public void setPosition(final ThreeDimensionalVector position) {
         this.position = position;
     }
 
@@ -48,21 +48,24 @@ public class Camera {
         return target;
     }
 
-    public void movePosition(final Vector translation) {
-        this.position = this.position.addition(translation);
+    // рак тут
+    public void movePosition(final ThreeDimensionalVector translation) {
+        this.position = (ThreeDimensionalVector) this.position.addition(translation);
     }
 
     public void moveTarget(final ThreeDimensionalVector translation) {
-        this.target = target.addition(translation);
+        this.target = (ThreeDimensionalVector) target.addition(translation);
     }
+    //
+
     public void moveCamera(final ThreeDimensionalVector translation) {
         movePosition(translation);
         moveTarget(translation);
     }
-    public void rotateCamera(final NDimensionalMatrix mR) throws Exception {
-        ThreeDimensionalVector vZ = ThreeDimensionalVector.subtraction((ThreeDimensionalVector) target, (ThreeDimensionalVector) position);
+    public void rotateCamera(final NDimensionalMatrix mR) {
+        ThreeDimensionalVector vZ = ThreeDimensionalVector.subtraction(target, position);
         vZ = GraphicConveyor.multiplyMatrix4ByVector3(mR, vZ);
-        target = ThreeDimensionalVector.addition((ThreeDimensionalVector) position, vZ);
+        target = ThreeDimensionalVector.addition(position, vZ);
 
     }
     NDimensionalMatrix getViewMatrix() {
