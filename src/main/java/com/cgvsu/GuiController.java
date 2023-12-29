@@ -9,7 +9,7 @@ import com.cgvsu.objreader.IncorrectFileException;
 import com.cgvsu.objreader.ObjReaderException;
 import com.cgvsu.objwriter.ObjWriter;
 import com.cgvsu.objwriter.ObjWriterException;
-import com.cgvsu.render_engine.CameraController;
+import com.cgvsu.render_engine.camera.CameraController;
 import com.cgvsu.render_engine.RenderEngine;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +17,6 @@ import javafx.fxml.FXML;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -39,7 +38,7 @@ import java.util.ArrayList;
 
 import com.cgvsu.model.Model;
 import com.cgvsu.objreader.ObjReader;
-import com.cgvsu.render_engine.Camera;
+import com.cgvsu.render_engine.camera.Camera;
 
 public class GuiController {
 
@@ -95,7 +94,7 @@ public class GuiController {
 
         renderEngine.setCameraController(new CameraController(camera, TRANSLATION));
 
-        KeyFrame frame = new KeyFrame(Duration.millis(30), event -> {
+        KeyFrame frame = new KeyFrame(Duration.millis(33), event -> {
             renderEngine.setWidth((int) canvas.getWidth());
             renderEngine.setHeight((int) canvas.getHeight());
 
@@ -104,7 +103,7 @@ public class GuiController {
             }
 
             canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            camera.setAspectRatio((float) (canvas.getWidth() / canvas.getHeight()));
+            camera.setAspectRatio((float)(canvas.getWidth() / canvas.getHeight()));
 
             renderEngine.render();
         });

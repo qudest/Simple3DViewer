@@ -1,8 +1,7 @@
-package com.cgvsu.render_engine;
-import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
+package com.cgvsu.render_engine.camera;
 import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Vectors.*;
-
+import com.cgvsu.render_engine.graphicConveyor.GraphicConveyor;
 
 
 public class Camera {
@@ -40,24 +39,26 @@ public class Camera {
         this.aspectRatio = aspectRatio;
     }
 
-    public Vector getPosition() {
+    public ThreeDimensionalVector getPosition() {
         return position;
     }
 
-    public Vector getTarget() {
+    public ThreeDimensionalVector getTarget() {
         return target;
     }
 
-    // рак тут
+    // в отдельный
     public void movePosition(final ThreeDimensionalVector translation) {
-        this.position = (ThreeDimensionalVector) this.position.addition(translation);
+        this.position = addAndConvertToThreeDimensionalVector(this.position, this.position.addition(translation));
     }
 
     public void moveTarget(final ThreeDimensionalVector translation) {
-        this.target = (ThreeDimensionalVector) target.addition(translation);
+        this.target = addAndConvertToThreeDimensionalVector(this.target, this.target.addition(translation));
     }
-    //
-
+    private ThreeDimensionalVector addAndConvertToThreeDimensionalVector(ThreeDimensionalVector original, Vector additionResult) {
+        double[] tmp = additionResult.getArrValues();
+        return new ThreeDimensionalVector(tmp[0], tmp[1], tmp[2]);
+    }
     public void moveCamera(final ThreeDimensionalVector translation) {
         movePosition(translation);
         moveTarget(translation);
@@ -68,11 +69,11 @@ public class Camera {
         target = ThreeDimensionalVector.addition(position, vZ);
 
     }
-    NDimensionalMatrix getViewMatrix() {
+    public NDimensionalMatrix getViewMatrix() {
         return GraphicConveyor.lookAt(position,target);
     }
 
-    NDimensionalMatrix getProjectionMatrix() {
+    public NDimensionalMatrix getProjectionMatrix() {
         return GraphicConveyor.perspective(fov, aspectRatio, nearPlane, farPlane);
     }
 }

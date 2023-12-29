@@ -1,10 +1,7 @@
-package com.cgvsu.render_engine;
+package com.cgvsu.render_engine.graphicConveyor;
 
-import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
-import com.cgvsu.Math.Matrix.Matrix;
 import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Point.Point2f;
-import com.cgvsu.Math.Vectors.FourDimensionalVector;
 import com.cgvsu.Math.Vectors.NDimensionalVector;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
 import com.cgvsu.Math.Vectors.Vector;
@@ -33,8 +30,8 @@ public class GraphicConveyor {
         double sinX = Math.sin(xAngle);
 
         NDimensionalVector v1 = new NDimensionalVector(1, 0, 0, 0);
-        NDimensionalVector v2 = new NDimensionalVector(0, cosX, -sinX, 0);
-        NDimensionalVector v3 = new NDimensionalVector(0, sinX, cosX, 0);
+        NDimensionalVector v2 = new NDimensionalVector(0, cosX, sinX, 0);
+        NDimensionalVector v3 = new NDimensionalVector(0, -sinX, cosX, 0);
         NDimensionalVector v4 = new NDimensionalVector(0, 0, 0, 1);
 
         return new NDimensionalMatrix(v1, v2, v3, v4);
@@ -44,9 +41,9 @@ public class GraphicConveyor {
         double cosY = Math.cos(yAngle);
         double sinY = Math.sin(yAngle);
 
-        NDimensionalVector v1 = new NDimensionalVector(cosY, 0, sinY, 0);
+        NDimensionalVector v1 = new NDimensionalVector(cosY, 0, -sinY, 0);
         NDimensionalVector v2 = new NDimensionalVector(0, 1, 0, 0);
-        NDimensionalVector v3 = new NDimensionalVector(-sinY, 0, cosY, 0);
+        NDimensionalVector v3 = new NDimensionalVector(sinY, 0, cosY, 0);
         NDimensionalVector v4 = new NDimensionalVector(0, 0, 0, 1);
 
         return new NDimensionalMatrix(v1, v2, v3, v4);
@@ -56,8 +53,8 @@ public class GraphicConveyor {
         double cosZ = Math.cos(zAngle);
         double sinZ = Math.sin(zAngle);
 
-        NDimensionalVector v1 = new NDimensionalVector(cosZ, -sinZ, 0, 0);
-        NDimensionalVector v2 = new NDimensionalVector(sinZ, cosZ, 0, 0);
+        NDimensionalVector v1 = new NDimensionalVector(cosZ, sinZ, 0, 0);
+        NDimensionalVector v2 = new NDimensionalVector(-sinZ, cosZ, 0, 0);
         NDimensionalVector v3 = new NDimensionalVector(0, 0, 1, 0);
         NDimensionalVector v4 = new NDimensionalVector(0, 0, 0, 1);
 
@@ -78,7 +75,7 @@ public class GraphicConveyor {
 
         return (NDimensionalMatrix) translationMatrix.multiplyMatrix(rotationMatrix).multiplyMatrix(scaleMatrix);
     }
-    public static NDimensionalMatrix lookAt(Vector eye, Vector target) {
+    public static NDimensionalMatrix lookAt(ThreeDimensionalVector eye, ThreeDimensionalVector target) {
         return lookAt(new ThreeDimensionalVector(eye.getArrValues()[0], eye.getArrValues()[1], eye.getArrValues()[2]), new ThreeDimensionalVector(target.getArrValues()[0], target.getArrValues()[1], target.getArrValues()[2]), new ThreeDimensionalVector(0F, 1.0F, 0F));
     }
 

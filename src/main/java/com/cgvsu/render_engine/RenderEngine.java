@@ -2,17 +2,17 @@ package com.cgvsu.render_engine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.cgvsu.Math.AffineTransformation.AffineTransformation;
-import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
 import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Point.Point2f;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
+import com.cgvsu.render_engine.camera.Camera;
+import com.cgvsu.render_engine.camera.CameraController;
 import javafx.scene.canvas.GraphicsContext;
 import com.cgvsu.model.Model;
-import static com.cgvsu.render_engine.GraphicConveyor.*;
+import static com.cgvsu.render_engine.graphicConveyor.GraphicConveyor.*;
 
 public class RenderEngine {
     private final GraphicsContext graphicsContext;

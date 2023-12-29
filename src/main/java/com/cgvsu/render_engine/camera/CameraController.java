@@ -1,8 +1,9 @@
-package com.cgvsu.render_engine;
+package com.cgvsu.render_engine.camera;
 
 import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
 import com.cgvsu.Math.Vectors.TwoDimensionalVector;
+import com.cgvsu.render_engine.graphicConveyor.GraphicConveyor;
 
 public class CameraController {
     private ThreeDimensionalVector forwardV;

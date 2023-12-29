@@ -1,10 +1,9 @@
-package com.cgvsu.render_engine;
+package com.cgvsu.render_engine.graphicConveyor;
 
 import com.cgvsu.Math.Matrix.FourDimensionalMatrix;
 import com.cgvsu.Math.Matrix.NDimensionalMatrix;
 import com.cgvsu.Math.Vectors.NDimensionalVector;
 import com.cgvsu.Math.Vectors.ThreeDimensionalVector;
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
