@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class BarycentricCoordinaesTest {
+public class BarycentricCoordinatesTest {
     @Test
     public void testSumOfCoordinates() {
         TwoDimensionalVector a = new TwoDimensionalVector(0, 0);

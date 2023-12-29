@@ -9,7 +9,7 @@ import com.cgvsu.Math.Vectors.Vector;
 
 public class GraphicConveyor {
 
-    protected static NDimensionalMatrix getScaleMatrix(ThreeDimensionalVector scale) {
+    public static NDimensionalMatrix getScaleMatrix(ThreeDimensionalVector scale) {
         NDimensionalVector v1 = new NDimensionalVector(scale.getA(), 0, 0, 0);
         NDimensionalVector v2 = new NDimensionalVector(0, scale.getB(), 0, 0);
         NDimensionalVector v3 = new NDimensionalVector(0, 0, scale.getC(), 0);
